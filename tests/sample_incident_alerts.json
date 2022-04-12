@@ -1,0 +1,80 @@
+[
+    {
+        "id": "Q2XYZ0W6XYZEC1",
+        "type": "alert",
+        "summary": "DNSErrors05MinSRE CRITICAL (12)",
+        "self": "https://api.pagerduty.com/alerts/Q2XYZ0W6XYZEC1",
+        "html_url": "https://redhat.pagerduty.com/alerts/Q2XYZ0W6XYZEC1",
+        "created_at": "2022-02-15T17:54:25Z",
+        "status": "resolved",
+        "resolved_at": "2022-02-15T18:34:25Z",
+        "alert_key": "e4c364c446a09a855044756a8abbeb1b530f103592533c77a0b29a01407a9",
+        "suppressed": false,
+        "service": {
+            "id": "PSXYZP1",
+            "type": "service_reference",
+            "summary": "osd-dummy.du4y.s1.openshiftapps.com-hive-cluster",
+            "self": "https://api.pagerduty.com/services/PSXYZP1",
+            "html_url": "https://redhat.pagerduty.com/service-directory/PSXYZP1"
+        },
+        "severity": "critical",
+        "incident": {
+            "id": "Q1S1T0XH11W11X",
+            "type": "incident_reference",
+            "summary": "[#868037] [See SNow ticket in Notes] DNSErrors05MinSRE CRITICAL (6)",
+            "self": "https://api.pagerduty.com/incidents/Q1S1T0XH11W11X",
+            "html_url": "https://redhat.pagerduty.com/incidents/Q1S1T0XH11W11X"
+        },
+        "first_trigger_log_entry": {
+            "id": "R47CXYZYKT2WL00CS06Y6DI0RVT",
+            "type": "trigger_log_entry_reference",
+            "summary": "Triggered through the API",
+            "self": "https://api.pagerduty.com/log_entries/R47CXYZYKT2WL00CS06Y6DI0RVT",
+            "html_url": "https://redhat.pagerduty.com/alerts/Q2XYZ0W6XYZEC1/log_entries/R47CXYZYKT2WL00CS06Y6DI0RVT"
+        },
+        "body": {
+            "contexts": [],
+            "details": {
+                "alert_name": "DNSErrors05MinSRE",
+                "cluster_id": "e6a41234-1111-42e6-a780-123b1b10b64b",
+                "firing": "Labels:\n - alertname = DNSErrors05MinSRE\n - container = main\n - endpoint = http-main\n - instance = 999.999.999.999:8080\n - job = sre-dns-latency-exporter\n - namespace = openshift-monitoring\n - pod = sre-dns-latency-exporter-cdbhw\n - prometheus = openshift-monitoring/k8s\n - service = sre-dns-latency-exporter\n - severity = critical\nAnnotations:\n - message = DNS checks have been failing for the past 5 minutes on pod- sre-dns-latency-exporter-cdbhw\nSource: https://prometheus-k8s-openshift-monitoring.apps.dummy.du4y.s1.openshiftapps.com/graph?g0.expr=rate%28dns_failure_failure_total%5B5m%5D%29+%3E+0&g0.tab=1\nLabels:\n - alertname = DNSErrors05MinSRE\n - container = main\n - endpoint = http-main\n - instance = 999.999.999.999:8080\n - job = sre-dns-latency-exporter\n - namespace = openshift-monitoring\n - pod = sre-dns-latency-exporter-495vf\n - prometheus = openshift-monitoring/k8s\n - service = sre-dns-latency-exporter\n - severity = critical\nAnnotations:\n - message = DNS checks have been failing for the past 5 minutes on pod- sre-dns-latency-exporter-495vf\nSource: https://prometheus-k8s-openshift-monitoring.apps.dummy.du4y.s1.openshiftapps.com/graph?g0.expr=rate%28dns_failure_failure_total%5B5m%5D%29+%3E+0&g0.tab=1\nLabels:\n - alertname = DNSErrors05MinSRE\n - container = main\n - endpoint = http-main\n - instance = 999.999.999.999:8080\n - job = sre-dns-latency-exporter\n - namespace = openshift-monitoring\n - pod = sre-dns-latency-exporter-8qxbh\n - prometheus = openshift-monitoring/k8s\n - service = sre-dns-latency-exporter\n - severity = critical\nAnnotations:\n - message = DNS checks have been failing for the past 5 minutes on pod- sre-dns-latency-exporter-8qxbh\nSource: https://prometheus-k8s-openshift-monitoring.apps.dummy.du4y.s1.openshiftapps.com/graph?g0.expr=rate%28dns_failure_failure_total%5B5m%5D%29+%3E+0&g0.tab=1\nLabels:\n - alertname = DNSErrors05MinSRE\n - container = main\n - endpoint = http-main\n - instance = 999.999.999.999:8080\n - job = sre-dns-latency-exporter\n - namespace = openshift-monitoring\n - pod = sre-dns-latency-exporter-mszbj\n - prometheus = openshift-monitoring/k8s\n - service = sre-dns-latency-exporter\n - severity = critical\nAnnotations:\n - message = DNS checks have been failing for the past 5 minutes on pod- sre-dns-latency-exporter-mszbj\nSource: https://prometheus-k8s-openshift-monitoring.apps.dummy.du4y.s1.openshiftapps.com/graph?g0.expr=rate%28dns_failure_failure_total%5B5m%5D%29+%3E+0&g0.tab=1\nLabels:\n - alertname = DNSErrors05MinSRE\n - container = main\n - endpoint = http-main\n - instance = 999.999.999.999:8080\n - job = sre-dns-latency-exporter\n - namespace = openshift-monitoring\n - pod = sre-dns-latency-exporter-lkjr6\n - prometheus = openshift-monitoring/k8s\n - service = sre-dns-latency-exporter\n - severity = critical\nAnnotations:\n - message = DNS checks have been failing for the past 5 minutes on pod- sre-dns-latency-exporter-lkjr6\nSource: https://prometheus-k8s-openshift-monitoring.apps.dummy.du4y.s1.openshiftapps.com/graph?g0.expr=rate%28dns_failure_failure_total%5B5m%5D%29+%3E+0&g0.tab=1\nLabels:\n - alertname = DNSErrors05MinSRE\n - container = main\n - endpoint = http-main\n - instance = 999.999.999.999:8080\n - job = sre-dns-latency-exporter\n - namespace = openshift-monitoring\n - pod = sre-dns-latency-exporter-wr2qx\n - prometheus = openshift-monitoring/k8s\n - service = sre-dns-latency-exporter\n - severity = critical\nAnnotations:\n - message = DNS checks have been failing for the past 5 minutes on pod- sre-dns-latency-exporter-wr2qx\nSource: https://prometheus-k8s-openshift-monitoring.apps.dummy.du4y.s1.openshiftapps.com/graph?g0.expr=rate%28dns_failure_failure_total%5B5m%5D%29+%3E+0&g0.tab=1\n",
+                "link": "https://github.com/openshift/ops-sop/tree/master/v4/alerts/DNSErrors05MinSRE.md",
+                "num_firing": "6",
+                "num_resolved": "0",
+                "ocm_link": "https://console.redhat.com/openshift/details/e6a41234-1111-42e6-a780-123b1b10b64b",
+                "resolved": ""
+            },
+            "cef_details": {
+                "client": "AlertManager",
+                "client_url": "https://dummy-monitoring.apps.dummy.du4y.s1.openshiftapps.com/#/alerts?receiver=pagerduty",
+                "contexts": [],
+                "dedup_key": "e4c364c446a09a883855044756a8abbeb1b111f103592533c77a0b29a01407a9",
+                "description": "DNSErrors05MinSRE CRITICAL (6)",
+                "details": {
+                    "alert_name": "DNSErrors05MinSRE",
+                    "cluster_id": "e6a41234-1111-42e6-a780-123b1b10b64b",
+                    "firing": "Labels:\n - alertname = DNSErrors05MinSRE\n - container = main\n - endpoint = http-main\n - instance = 999.999.999.999:8080\n - job = sre-dns-latency-exporter\n - namespace = openshift-monitoring\n - pod = sre-dns-latency-exporter-cdbhw\n - prometheus = openshift-monitoring/k8s\n - service = sre-dns-latency-exporter\n - severity = critical\nAnnotations:\n - message = DNS checks have been failing for the past 5 minutes on pod- sre-dns-latency-exporter-cdbhw\nSource: https://prometheus-k8s-openshift-monitoring.apps.dummy.du4y.s1.openshiftapps.com/graph?g0.expr=rate%28dns_failure_failure_total%5B5m%5D%29+%3E+0&g0.tab=1\nLabels:\n - alertname = DNSErrors05MinSRE\n - container = main\n - endpoint = http-main\n - instance = 999.999.999.999:8080\n - job = sre-dns-latency-exporter\n - namespace = openshift-monitoring\n - pod = sre-dns-latency-exporter-495vf\n - prometheus = openshift-monitoring/k8s\n - service = sre-dns-latency-exporter\n - severity = critical\nAnnotations:\n - message = DNS checks have been failing for the past 5 minutes on pod- sre-dns-latency-exporter-495vf\nSource: https://prometheus-k8s-openshift-monitoring.apps.dummy.du4y.s1.openshiftapps.com/graph?g0.expr=rate%28dns_failure_failure_total%5B5m%5D%29+%3E+0&g0.tab=1\nLabels:\n - alertname = DNSErrors05MinSRE\n - container = main\n - endpoint = http-main\n - instance = 999.999.999.999:8080\n - job = sre-dns-latency-exporter\n - namespace = openshift-monitoring\n - pod = sre-dns-latency-exporter-8qxbh\n - prometheus = openshift-monitoring/k8s\n - service = sre-dns-latency-exporter\n - severity = critical\nAnnotations:\n - message = DNS checks have been failing for the past 5 minutes on pod- sre-dns-latency-exporter-8qxbh\nSource: https://prometheus-k8s-openshift-monitoring.apps.dummy.du4y.s1.openshiftapps.com/graph?g0.expr=rate%28dns_failure_failure_total%5B5m%5D%29+%3E+0&g0.tab=1\nLabels:\n - alertname = DNSErrors05MinSRE\n - container = main\n - endpoint = http-main\n - instance = 999.999.999.999:8080\n - job = sre-dns-latency-exporter\n - namespace = openshift-monitoring\n - pod = sre-dns-latency-exporter-mszbj\n - prometheus = openshift-monitoring/k8s\n - service = sre-dns-latency-exporter\n - severity = critical\nAnnotations:\n - message = DNS checks have been failing for the past 5 minutes on pod- sre-dns-latency-exporter-mszbj\nSource: https://prometheus-k8s-openshift-monitoring.apps.dummy.du4y.s1.openshiftapps.com/graph?g0.expr=rate%28dns_failure_failure_total%5B5m%5D%29+%3E+0&g0.tab=1\nLabels:\n - alertname = DNSErrors05MinSRE\n - container = main\n - endpoint = http-main\n - instance = 999.999.999.999:8080\n - job = sre-dns-latency-exporter\n - namespace = openshift-monitoring\n - pod = sre-dns-latency-exporter-lkjr6\n - prometheus = openshift-monitoring/k8s\n - service = sre-dns-latency-exporter\n - severity = critical\nAnnotations:\n - message = DNS checks have been failing for the past 5 minutes on pod- sre-dns-latency-exporter-lkjr6\nSource: https://prometheus-k8s-openshift-monitoring.apps.dummy.du4y.s1.openshiftapps.com/graph?g0.expr=rate%28dns_failure_failure_total%5B5m%5D%29+%3E+0&g0.tab=1\nLabels:\n - alertname = DNSErrors05MinSRE\n - container = main\n - endpoint = http-main\n - instance = 999.999.999.999:8080\n - job = sre-dns-latency-exporter\n - namespace = openshift-monitoring\n - pod = sre-dns-latency-exporter-wr2qx\n - prometheus = openshift-monitoring/k8s\n - service = sre-dns-latency-exporter\n - severity = critical\nAnnotations:\n - message = DNS checks have been failing for the past 5 minutes on pod- sre-dns-latency-exporter-wr2qx\nSource: https://prometheus-k8s-openshift-monitoring.apps.dummy.du4y.s1.openshiftapps.com/graph?g0.expr=rate%28dns_failure_failure_total%5B5m%5D%29+%3E+0&g0.tab=1\n",
+                    "link": "https://github.com/openshift/ops-sop/tree/master/v4/alerts/DNSErrors05MinSRE.md",
+                    "num_firing": "6",
+                    "num_resolved": "0",
+                    "ocm_link": "https://console.redhat.com/openshift/details/e6a41234-1111-42e6-a780-123b1b10b64b",
+                    "resolved": ""
+                },
+                "message": "DNSErrors05MinSRE CRITICAL (6)",
+                "mutations": [],
+                "severity": "critical",
+                "source_origin": "AlertManager",
+                "version": "1.0"
+            },
+            "type": "alert_body"
+        },
+        "integration": {
+            "id": "PXXX0BT",
+            "type": "events_api_v2_inbound_integration_reference",
+            "summary": "V4 Alertmanager",
+            "self": "https://api.pagerduty.com/services/PSXYZP1/integrations/PXXX0BT",
+            "html_url": "https://redhat.pagerduty.com/services/PSXYZP1/integrations/PXXX0BT"
+        },
+        "privilege": null
+    }
+]

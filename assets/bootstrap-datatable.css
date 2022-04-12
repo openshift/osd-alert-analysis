@@ -1,0 +1,42 @@
+/* Borrowed from https://community.plotly.com/t/styling-dash-datatable-select-rows-radio-button-and-checkbox/59466 */
+.dbc-row-selectable input[type=checkbox],  .dbc-row-selectable input[type=radio] {
+    border: 1px solid rgb(100, 100, 100);
+    color: var(--bs-body-color);
+    font-weight: bold;
+    background-color: inherit;
+    width: 1em;
+    height: 1em;
+    outline: 0;
+    padding: 0;
+    float: left;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    margin-right: 5px;
+}
+
+.dbc-row-selectable input[type=radio] {
+    border-radius: 50%;
+    position: relative;
+}
+
+.dbc-row-selectable input[type=radio]:checked:before {
+    content: "";
+    background-color: var(--bs-primary);
+    float: left;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    transform: scale(0.65);
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+}
+
+.dbc-row-selectable input[type=checkbox]:checked:before {
+    content: "✓";
+    float: left;
+    width: 1em;
+    height: 1em;
+    line-height: 1em;
+    text-align: center;
+}

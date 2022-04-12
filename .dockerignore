@@ -1,0 +1,9 @@
+**/.git
+**/__pycache__
+**/.vscode
+.env
+*.venv
+notebooks
+tests
+*.csv
+.gitignore

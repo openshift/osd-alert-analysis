@@ -1,0 +1,562 @@
+[
+    {
+        "id": "R6EVKM5XEANC8URZ7X0X1FM8X2",
+        "type": "resolve_log_entry",
+        "summary": "Resolved through the API",
+        "self": "https://api.pagerduty.com/log_entries/R6EVKM5XEANC8URZ7X0X1FM8X2",
+        "html_url": null,
+        "created_at": "2022-02-15T18:34:25Z",
+        "agent": {
+            "id": "PXXX0BT",
+            "type": "events_api_v2_inbound_integration_reference",
+            "summary": "V4 Alertmanager",
+            "self": "https://api.pagerduty.com/services/PDUMMY7/integrations/PXXX0BT",
+            "html_url": "https://redhat.pagerduty.com/services/PDUMMY7/integrations/PXXX0BT"
+        },
+        "channel": {
+            "type": "integration"
+        },
+        "service": {
+            "id": "PDUMMY7",
+            "type": "service_reference",
+            "summary": "dummy.du4y.s1.openshiftapps.com-hive-cluster",
+            "self": "https://api.pagerduty.com/services/PDUMMY7",
+            "html_url": "https://redhat.pagerduty.com/service-directory/PDUMMY7"
+        },
+        "incident": {
+            "id": "Q3DUM0MY38Q39W",
+            "type": "incident_reference",
+            "summary": "[#999137] [See SNow ticket in Notes] DNSErrors05MinSRE CRITICAL (6)",
+            "self": "https://api.pagerduty.com/incidents/Q3DUM0MY38Q39W",
+            "html_url": "https://redhat.pagerduty.com/incidents/Q3DUM0MY38Q39W"
+        },
+        "teams": [
+            {
+                "id": "PAPQM6G",
+                "type": "team_reference",
+                "summary": "Platform SRE",
+                "self": "https://api.pagerduty.com/teams/PAPQM6G",
+                "html_url": "https://redhat.pagerduty.com/teams/PAPQM6G"
+            }
+        ],
+        "contexts": [],
+        "event_details": {}
+    },
+    {
+        "id": "R8UTZ0GWZWUYOGVXFVNUDP32HX",
+        "type": "title_change_log_entry",
+        "summary": "Name changed from \"DNSErrors05MinSRE CRITICAL (6)\" to \"[See SNow ticket in Notes] DNSErrors05MinSRE CRITICAL (6)\" by Tony Test",
+        "self": "https://api.pagerduty.com/log_entries/R1UTZ0GWZWUXQGVXFVNUDP11HC",
+        "html_url": null,
+        "created_at": "2022-02-15T18:19:22Z",
+        "agent": {
+            "id": "PB54TTU",
+            "type": "user_reference",
+            "summary": "Tony Test",
+            "self": "https://api.pagerduty.com/users/PB54TTU",
+            "html_url": "https://redhat.pagerduty.com/users/PB54TTU"
+        },
+        "channel": {
+            "type": "website",
+            "old_title": "DNSErrors05MinSRE CRITICAL (6)",
+            "new_title": "[See SNow ticket in Notes] DNSErrors05MinSRE CRITICAL (6)"
+        },
+        "service": {
+            "id": "PDUMMY7",
+            "type": "service_reference",
+            "summary": "dummy.du4y.s1.openshiftapps.com-hive-cluster",
+            "self": "https://api.pagerduty.com/services/PDUMMY7",
+            "html_url": "https://redhat.pagerduty.com/service-directory/PDUMMY7"
+        },
+        "incident": {
+            "id": "Q3DUM0MY38Q39W",
+            "type": "incident_reference",
+            "summary": "[#999137] [See SNow ticket in Notes] DNSErrors05MinSRE CRITICAL (6)",
+            "self": "https://api.pagerduty.com/incidents/Q3DUM0MY38Q39W",
+            "html_url": "https://redhat.pagerduty.com/incidents/Q3DUM0MY38Q39W"
+        },
+        "teams": [
+            {
+                "id": "PAPQM6G",
+                "type": "team_reference",
+                "summary": "Platform SRE",
+                "self": "https://api.pagerduty.com/teams/PAPQM6G",
+                "html_url": "https://redhat.pagerduty.com/teams/PAPQM6G"
+            }
+        ],
+        "contexts": []
+    },
+    {
+        "id": "R0KBE7GVQX7D0UY5SBQD9D8K8F",
+        "type": "assign_log_entry",
+        "summary": "Assigned to Silent Test by Tony Test",
+        "self": "https://api.pagerduty.com/log_entries/R0KBE7GVQX7D0UY5SBQD9D8K8F",
+        "html_url": null,
+        "created_at": "2022-02-15T18:18:55Z",
+        "agent": {
+            "id": "PB54TTU",
+            "type": "user_reference",
+            "summary": "Tony Test",
+            "self": "https://api.pagerduty.com/users/PB54TTU",
+            "html_url": "https://redhat.pagerduty.com/users/PB54TTU"
+        },
+        "channel": {
+            "type": "website"
+        },
+        "service": {
+            "id": "PDUMMY7",
+            "type": "service_reference",
+            "summary": "dummy.du4y.s1.openshiftapps.com-hive-cluster",
+            "self": "https://api.pagerduty.com/services/PDUMMY7",
+            "html_url": "https://redhat.pagerduty.com/service-directory/PDUMMY7"
+        },
+        "incident": {
+            "id": "Q3DUM0MY38Q39W",
+            "type": "incident_reference",
+            "summary": "[#999137] [See SNow ticket in Notes] DNSErrors05MinSRE CRITICAL (6)",
+            "self": "https://api.pagerduty.com/incidents/Q3DUM0MY38Q39W",
+            "html_url": "https://redhat.pagerduty.com/incidents/Q3DUM0MY38Q39W"
+        },
+        "teams": [
+            {
+                "id": "PAPQM6G",
+                "type": "team_reference",
+                "summary": "Platform SRE",
+                "self": "https://api.pagerduty.com/teams/PAPQM6G",
+                "html_url": "https://redhat.pagerduty.com/teams/PAPQM6G"
+            }
+        ],
+        "contexts": [],
+        "assignees": [
+            {
+                "id": "P8TT8XC",
+                "type": "user_reference",
+                "summary": "Silent Test",
+                "self": "https://api.pagerduty.com/users/P8TT8XC",
+                "html_url": "https://redhat.pagerduty.com/users/P8TT8XC"
+            }
+        ]
+    },
+    {
+        "id": "RO9VZT97UXY8MIL199N8OWW1WV",
+        "type": "annotate_log_entry",
+        "summary": "Note added by Tony Test",
+        "self": "https://api.pagerduty.com/log_entries/RO9VZT97UXY8MIL199N8OWW1WV",
+        "html_url": null,
+        "created_at": "2022-02-15T18:15:07Z",
+        "agent": {
+            "id": "PB54TTU",
+            "type": "user_reference",
+            "summary": "Tony Test",
+            "self": "https://api.pagerduty.com/users/PB54TTU",
+            "html_url": "https://redhat.pagerduty.com/users/PB54TTU"
+        },
+        "channel": {
+            "type": "note",
+            "summary": "See: SNow RITM1189610"
+        },
+        "service": {
+            "id": "PDUMMY7",
+            "type": "service_reference",
+            "summary": "dummy.du4y.s1.openshiftapps.com-hive-cluster",
+            "self": "https://api.pagerduty.com/services/PDUMMY7",
+            "html_url": "https://redhat.pagerduty.com/service-directory/PDUMMY7"
+        },
+        "incident": {
+            "id": "Q3DUM0MY38Q39W",
+            "type": "incident_reference",
+            "summary": "[#999137] [See SNow ticket in Notes] DNSErrors05MinSRE CRITICAL (6)",
+            "self": "https://api.pagerduty.com/incidents/Q3DUM0MY38Q39W",
+            "html_url": "https://redhat.pagerduty.com/incidents/Q3DUM0MY38Q39W"
+        },
+        "teams": [
+            {
+                "id": "PAPQM6G",
+                "type": "team_reference",
+                "summary": "Platform SRE",
+                "self": "https://api.pagerduty.com/teams/PAPQM6G",
+                "html_url": "https://redhat.pagerduty.com/teams/PAPQM6G"
+            }
+        ],
+        "contexts": []
+    },
+    {
+        "id": "R8DR3FZNTWJNVIGTYZWLKI45S0",
+        "type": "acknowledge_log_entry",
+        "summary": "Acknowledged by Tony Test",
+        "self": "https://api.pagerduty.com/log_entries/R8DR3FZNTWJNVIGTYZWLKI45S0",
+        "html_url": null,
+        "created_at": "2022-02-15T18:06:04Z",
+        "agent": {
+            "id": "PB54TTU",
+            "type": "user_reference",
+            "summary": "Tony Test",
+            "self": "https://api.pagerduty.com/users/PB54TTU",
+            "html_url": "https://redhat.pagerduty.com/users/PB54TTU"
+        },
+        "channel": {
+            "type": "website"
+        },
+        "service": {
+            "id": "PDUMMY7",
+            "type": "service_reference",
+            "summary": "dummy.du4y.s1.openshiftapps.com-hive-cluster",
+            "self": "https://api.pagerduty.com/services/PDUMMY7",
+            "html_url": "https://redhat.pagerduty.com/service-directory/PDUMMY7"
+        },
+        "incident": {
+            "id": "Q3DUM0MY38Q39W",
+            "type": "incident_reference",
+            "summary": "[#999137] [See SNow ticket in Notes] DNSErrors05MinSRE CRITICAL (6)",
+            "self": "https://api.pagerduty.com/incidents/Q3DUM0MY38Q39W",
+            "html_url": "https://redhat.pagerduty.com/incidents/Q3DUM0MY38Q39W"
+        },
+        "teams": [
+            {
+                "id": "PAPQM6G",
+                "type": "team_reference",
+                "summary": "Platform SRE",
+                "self": "https://api.pagerduty.com/teams/PAPQM6G",
+                "html_url": "https://redhat.pagerduty.com/teams/PAPQM6G"
+            }
+        ],
+        "contexts": [],
+        "acknowledgement_timeout": 21600,
+        "event_details": {}
+    },
+    {
+        "id": "R8XVUZVQ7GGOFEOJSXXGQJIJPJ",
+        "type": "acknowledge_log_entry",
+        "summary": "Acknowledged by User Person",
+        "self": "https://api.pagerduty.com/log_entries/R8XVUZVQ7GGOFEOJSXXGQJIJPJ",
+        "html_url": null,
+        "created_at": "2022-02-15T17:55:05Z",
+        "agent": {
+            "id": "PHXXS1Q",
+            "type": "user_reference",
+            "summary": "User Person",
+            "self": "https://api.pagerduty.com/users/PHXXS1Q",
+            "html_url": "https://redhat.pagerduty.com/users/PHXXS1Q"
+        },
+        "channel": {
+            "type": "mobile"
+        },
+        "service": {
+            "id": "PDUMMY7",
+            "type": "service_reference",
+            "summary": "dummy.du4y.s1.openshiftapps.com-hive-cluster",
+            "self": "https://api.pagerduty.com/services/PDUMMY7",
+            "html_url": "https://redhat.pagerduty.com/service-directory/PDUMMY7"
+        },
+        "incident": {
+            "id": "Q3DUM0MY38Q39W",
+            "type": "incident_reference",
+            "summary": "[#999137] [See SNow ticket in Notes] DNSErrors05MinSRE CRITICAL (6)",
+            "self": "https://api.pagerduty.com/incidents/Q3DUM0MY38Q39W",
+            "html_url": "https://redhat.pagerduty.com/incidents/Q3DUM0MY38Q39W"
+        },
+        "teams": [
+            {
+                "id": "PAPQM6G",
+                "type": "team_reference",
+                "summary": "Platform SRE",
+                "self": "https://api.pagerduty.com/teams/PAPQM6G",
+                "html_url": "https://redhat.pagerduty.com/teams/PAPQM6G"
+            }
+        ],
+        "contexts": [],
+        "acknowledgement_timeout": 21600,
+        "event_details": {}
+    },
+    {
+        "id": "R7L8VUAR1UP1SLYTAM5MZZYMPB",
+        "type": "notify_log_entry",
+        "summary": "Notified User Person by email",
+        "self": "https://api.pagerduty.com/log_entries/R7L8VUAR1UC1SLYXKM5MZZYMPB",
+        "html_url": null,
+        "created_at": "2022-02-15T17:54:26Z",
+        "channel": {
+            "type": "auto",
+            "notification": {
+                "type": "email",
+                "address": "nobody@redhat.com",
+                "conferenceAddress": null,
+                "status": "success"
+            }
+        },
+        "service": {
+            "id": "PDUMMY7",
+            "type": "service_reference",
+            "summary": "dummy.du4y.s1.openshiftapps.com-hive-cluster",
+            "self": "https://api.pagerduty.com/services/PDUMMY7",
+            "html_url": "https://redhat.pagerduty.com/service-directory/PDUMMY7"
+        },
+        "incident": {
+            "id": "Q3DUM0MY38Q39W",
+            "type": "incident_reference",
+            "summary": "[#999137] [See SNow ticket in Notes] DNSErrors05MinSRE CRITICAL (6)",
+            "self": "https://api.pagerduty.com/incidents/Q3DUM0MY38Q39W",
+            "html_url": "https://redhat.pagerduty.com/incidents/Q3DUM0MY38Q39W"
+        },
+        "teams": [
+            {
+                "id": "PAPQM6G",
+                "type": "team_reference",
+                "summary": "Platform SRE",
+                "self": "https://api.pagerduty.com/teams/PAPQM6G",
+                "html_url": "https://redhat.pagerduty.com/teams/PAPQM6G"
+            }
+        ],
+        "contexts": [],
+        "user": {
+            "id": "PHXXS1Q",
+            "type": "user_reference",
+            "summary": "User Person",
+            "self": "https://api.pagerduty.com/users/PHXXS1Q",
+            "html_url": "https://redhat.pagerduty.com/users/PHXXS1Q"
+        }
+    },
+    {
+        "id": "R4AGTX4L8Z2XYX0I03MRQKLIA6",
+        "type": "notify_log_entry",
+        "summary": "Notified User Person by push notification",
+        "self": "https://api.pagerduty.com/log_entries/R4AGTX4L8Z2XYX0I03MRQKLIA6",
+        "html_url": null,
+        "created_at": "2022-02-15T17:54:26Z",
+        "channel": {
+            "type": "auto",
+            "notification": {
+                "type": "android_push_notification",
+                "address": "LE0015",
+                "conferenceAddress": null,
+                "status": "success"
+            }
+        },
+        "service": {
+            "id": "PDUMMY7",
+            "type": "service_reference",
+            "summary": "dummy.du4y.s1.openshiftapps.com-hive-cluster",
+            "self": "https://api.pagerduty.com/services/PDUMMY7",
+            "html_url": "https://redhat.pagerduty.com/service-directory/PDUMMY7"
+        },
+        "incident": {
+            "id": "Q3DUM0MY38Q39W",
+            "type": "incident_reference",
+            "summary": "[#999137] [See SNow ticket in Notes] DNSErrors05MinSRE CRITICAL (6)",
+            "self": "https://api.pagerduty.com/incidents/Q3DUM0MY38Q39W",
+            "html_url": "https://redhat.pagerduty.com/incidents/Q3DUM0MY38Q39W"
+        },
+        "teams": [
+            {
+                "id": "PAPQM6G",
+                "type": "team_reference",
+                "summary": "Platform SRE",
+                "self": "https://api.pagerduty.com/teams/PAPQM6G",
+                "html_url": "https://redhat.pagerduty.com/teams/PAPQM6G"
+            }
+        ],
+        "contexts": [],
+        "user": {
+            "id": "PHXXS1Q",
+            "type": "user_reference",
+            "summary": "User Person",
+            "self": "https://api.pagerduty.com/users/PHXXS1Q",
+            "html_url": "https://redhat.pagerduty.com/users/PHXXS1Q"
+        }
+    },
+    {
+        "id": "R6M11VWD3WR37GOPVGXXYM66DP",
+        "type": "event_rule_action_log_entry",
+        "summary": "Event rule set urgency to high through the API",
+        "self": "https://api.pagerduty.com/log_entries/R6M11VWD3WR37GOPVGXXYM66DP",
+        "html_url": null,
+        "created_at": "2022-02-15T17:54:25Z",
+        "agent": {
+            "id": "PXXX0BT",
+            "type": "events_api_v2_inbound_integration_reference",
+            "summary": "V4 Alertmanager",
+            "self": "https://api.pagerduty.com/services/PDUMMY7/integrations/PXXX0BT",
+            "html_url": "https://redhat.pagerduty.com/services/PDUMMY7/integrations/PXXX0BT"
+        },
+        "channel": {
+            "type": "",
+            "urgency": "high",
+            "alert_based_severity": "critical"
+        },
+        "service": {
+            "id": "PDUMMY7",
+            "type": "service_reference",
+            "summary": "dummy.du4y.s1.openshiftapps.com-hive-cluster",
+            "self": "https://api.pagerduty.com/services/PDUMMY7",
+            "html_url": "https://redhat.pagerduty.com/service-directory/PDUMMY7"
+        },
+        "incident": {
+            "id": "Q3DUM0MY38Q39W",
+            "type": "incident_reference",
+            "summary": "[#999137] [See SNow ticket in Notes] DNSErrors05MinSRE CRITICAL (6)",
+            "self": "https://api.pagerduty.com/incidents/Q3DUM0MY38Q39W",
+            "html_url": "https://redhat.pagerduty.com/incidents/Q3DUM0MY38Q39W"
+        },
+        "teams": [
+            {
+                "id": "PAPQM6G",
+                "type": "team_reference",
+                "summary": "Platform SRE",
+                "self": "https://api.pagerduty.com/teams/PAPQM6G",
+                "html_url": "https://redhat.pagerduty.com/teams/PAPQM6G"
+            }
+        ],
+        "contexts": [],
+        "event_rule_action": {
+            "source_type": null
+        }
+    },
+    {
+        "id": "RR9K3TTW9OLNGGTFRX7C6J01LK",
+        "type": "link_log_entry",
+        "summary": "Alert \"DNSErrors05MinSRE CRITICAL (12)\" added through the API",
+        "self": "https://api.pagerduty.com/log_entries/RR6K3TTW9OLNGGZGRX7C6JTELK",
+        "html_url": null,
+        "created_at": "2022-02-15T17:54:25Z",
+        "agent": {
+            "id": "PDUMMY7",
+            "type": "service_reference",
+            "summary": "dummy.du4y.s1.openshiftapps.com-hive-cluster",
+            "self": "https://api.pagerduty.com/services/PDUMMY7",
+            "html_url": "https://redhat.pagerduty.com/service-directory/PDUMMY7"
+        },
+        "channel": {
+            "type": "website"
+        },
+        "service": {
+            "id": "PDUMMY7",
+            "type": "service_reference",
+            "summary": "dummy.du4y.s1.openshiftapps.com-hive-cluster",
+            "self": "https://api.pagerduty.com/services/PDUMMY7",
+            "html_url": "https://redhat.pagerduty.com/service-directory/PDUMMY7"
+        },
+        "incident": {
+            "id": "Q3DUM0MY38Q39W",
+            "type": "incident_reference",
+            "summary": "[#999137] [See SNow ticket in Notes] DNSErrors05MinSRE CRITICAL (6)",
+            "self": "https://api.pagerduty.com/incidents/Q3DUM0MY38Q39W",
+            "html_url": "https://redhat.pagerduty.com/incidents/Q3DUM0MY38Q39W"
+        },
+        "teams": [
+            {
+                "id": "PAPQM6G",
+                "type": "team_reference",
+                "summary": "Platform SRE",
+                "self": "https://api.pagerduty.com/teams/PAPQM6G",
+                "html_url": "https://redhat.pagerduty.com/teams/PAPQM6G"
+            }
+        ],
+        "contexts": [],
+        "linked_incident": {
+            "id": "Q2WLT0W6QWKET1",
+            "type": "alert_reference",
+            "summary": "DNSErrors05MinSRE CRITICAL (12)",
+            "self": "https://api.pagerduty.com/alerts/Q2WLT0W6JSKEC1",
+            "html_url": "https://redhat.pagerduty.com/alerts/Q2WLT0W6JSKEC1"
+        }
+    },
+    {
+        "id": "R0LQOBGKJLJFPK3EYXYXU6S4K0",
+        "type": "assign_log_entry",
+        "summary": "Assigned to User Person",
+        "self": "https://api.pagerduty.com/log_entries/R0LQOBGKJLJFPK3EYXYXU6S4K0",
+        "html_url": null,
+        "created_at": "2022-02-15T17:54:25Z",
+        "agent": {
+            "id": "PDUMMY7",
+            "type": "service_reference",
+            "summary": "dummy.du4y.s1.openshiftapps.com-hive-cluster",
+            "self": "https://api.pagerduty.com/services/PDUMMY7",
+            "html_url": "https://redhat.pagerduty.com/service-directory/PDUMMY7"
+        },
+        "channel": {
+            "type": "auto"
+        },
+        "service": {
+            "id": "PDUMMY7",
+            "type": "service_reference",
+            "summary": "dummy.du4y.s1.openshiftapps.com-hive-cluster",
+            "self": "https://api.pagerduty.com/services/PDUMMY7",
+            "html_url": "https://redhat.pagerduty.com/service-directory/PDUMMY7"
+        },
+        "incident": {
+            "id": "Q3DUM0MY38Q39W",
+            "type": "incident_reference",
+            "summary": "[#999137] [See SNow ticket in Notes] DNSErrors05MinSRE CRITICAL (6)",
+            "self": "https://api.pagerduty.com/incidents/Q3DUM0MY38Q39W",
+            "html_url": "https://redhat.pagerduty.com/incidents/Q3DUM0MY38Q39W"
+        },
+        "teams": [
+            {
+                "id": "PAPQM6G",
+                "type": "team_reference",
+                "summary": "Platform SRE",
+                "self": "https://api.pagerduty.com/teams/PAPQM6G",
+                "html_url": "https://redhat.pagerduty.com/teams/PAPQM6G"
+            }
+        ],
+        "contexts": [],
+        "assignees": [
+            {
+                "id": "PHXXS1Q",
+                "type": "user_reference",
+                "summary": "User Person",
+                "self": "https://api.pagerduty.com/users/PHXXS1Q",
+                "html_url": "https://redhat.pagerduty.com/users/PHXXS1Q"
+            }
+        ]
+    },
+    {
+        "id": "R6BHWWX111NG7W111ILF0ETST",
+        "type": "trigger_log_entry",
+        "summary": "Triggered through the API",
+        "self": "https://api.pagerduty.com/log_entries/R6BHWWX111NG7W111ILF0ETST",
+        "html_url": "https://redhat.pagerduty.com/incidents/Q3DUM0MY38Q39W/log_entries/R6BHWWX111NG7W111ILF0ETST",
+        "created_at": "2022-02-15T17:54:25Z",
+        "agent": {
+            "id": "PXXX0BT",
+            "type": "events_api_v2_inbound_integration_reference",
+            "summary": "V4 Alertmanager",
+            "self": "https://api.pagerduty.com/services/PDUMMY7/integrations/PXXX0BT",
+            "html_url": "https://redhat.pagerduty.com/services/PDUMMY7/integrations/PXXX0BT"
+        },
+        "channel": {
+            "type": "api",
+            "summary": "DNSErrors05MinSRE CRITICAL (6)",
+            "client_url": "https://monitoring.apps.dummy.du4y.s1.openshiftapps.com/#/alerts?receiver=pagerduty",
+            "client": "AlertManager"
+        },
+        "service": {
+            "id": "PDUMMY7",
+            "type": "service_reference",
+            "summary": "dummy.du4y.s1.openshiftapps.com-hive-cluster",
+            "self": "https://api.pagerduty.com/services/PDUMMY7",
+            "html_url": "https://redhat.pagerduty.com/service-directory/PDUMMY7"
+        },
+        "incident": {
+            "id": "Q3DUM0MY38Q39W",
+            "type": "incident_reference",
+            "summary": "[#999137] [See SNow ticket in Notes] DNSErrors05MinSRE CRITICAL (6)",
+            "self": "https://api.pagerduty.com/incidents/Q3DUM0MY38Q39W",
+            "html_url": "https://redhat.pagerduty.com/incidents/Q3DUM0MY38Q39W"
+        },
+        "teams": [
+            {
+                "id": "PAPQM6G",
+                "type": "team_reference",
+                "summary": "Platform SRE",
+                "self": "https://api.pagerduty.com/teams/PAPQM6G",
+                "html_url": "https://redhat.pagerduty.com/teams/PAPQM6G"
+            }
+        ],
+        "contexts": [],
+        "event_details": {
+            "description": "DNSErrors05MinSRE CRITICAL (6)"
+        }
+    }
+]

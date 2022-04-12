@@ -1,0 +1,111 @@
+apiVersion: template.openshift.io/v1
+kind: Template
+parameters:
+  - name: name
+    description: the name of the app
+    value: osd-alert-analysis
+  - name: project
+    displayName: Project
+  - name: appport
+    displayName: AppPort
+    description: the port your application container exposes
+    value: "8080"
+  - name: appcode
+    displayName: AppCode
+    description: Red Hat CMDB application code
+  - name: image
+    displayName: Image
+    description: Docker image
+  - name: hostname
+    displayName: hostname
+    description: the hostname to use in the Route
+    required: true
+  - name: zone
+    description: zone {internal,external}
+    displayName: security zone
+    value: internal
+objects:
+  - apiVersion: apps.openshift.io/v1
+    kind: DeploymentConfig
+    metadata:
+      name: osd-alert-analysis
+      namespace: ${project}
+      labels:
+        app: ${name}
+        paas.redhat.com/appcode: ${appcode}
+    spec:
+      replicas: 3
+      selector:
+        app: ${name}
+      template:
+        metadata:
+          labels:
+            app: ${name}
+        spec:
+          containers:
+            - name: ${name}
+              image: ${image}
+              envFrom:
+                - configMapRef:
+                    name: alert-analysis-config
+                - secretRef:
+                    name: alert-analysis-database-ro
+                - secretRef:
+                    name: alert-analysis-pagerduty-token
+              ports:
+                - containerPort: ${{appport}}
+              readinessProbe:
+                httpGet:
+                  port: ${{appport}}
+                  path: /
+                initialDelaySeconds: 5
+                periodSeconds: 10
+              livenessProbe:
+                httpGet:
+                  port: ${{appport}}
+                  path: /
+                initialDelaySeconds: 15
+                periodSeconds: 20
+              resources:
+                limits:
+                  cpu: 500m
+                  memory: 128Mi
+                requests:
+                  cpu: 200m
+                  memory: 64Mi
+      strategy:
+        type: Rolling
+      triggers:
+	      - type: "ConfigChange" 
+  - apiVersion: v1
+    kind: Service
+    metadata:
+      name: ${name}
+      namespace: ${project}
+      labels:
+        app: ${name}
+        paas.redhat.com/appcode: ${appcode}
+    spec:
+      selector:
+        app: ${name}
+      ports:
+        - port: 8080
+
+  - apiVersion: v1
+    kind: Route
+    metadata:
+      name: ${name}
+      namespace: ${project}
+      labels:
+        app: ${name}
+        paas.redhat.com/appcode: ${appcode}
+        shard: "${zone}"
+    spec:
+      host: ${hostname}
+      port:
+        targetPort: 8080
+      to:
+        kind: Service
+        name: ${name}
+        weight: 100
+

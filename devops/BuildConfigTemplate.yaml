@@ -1,0 +1,67 @@
+kind: Template
+apiVersion: template.openshift.io/v1
+metadata:
+  name: standard-build-config-v1
+  namespace: osd-alert-analysis--pipeline
+parameters:
+  - name: NAME
+    description: Image Name. Image will be published to images.paas.redhat.com/osd-alert-analysis/${NAME}:${TAG}
+    required: true
+
+  - name: TAG
+    description: Image tag.
+    value: latest
+
+  - name: DESCRIPTION
+    description: sets the description label on the image
+
+  - name: DOCKERFILE_PATH
+    displayName: "Dockerfile path"
+    description: "Path in the git repository of the Dockerfile to use for the build."
+    value: Dockerfile
+
+  - name: LIMIT_CPU
+    description: Max cpu that the build can use
+    value: "1"
+
+  - name: LIMIT_MEMORY
+    description: Max memory that the build can use
+    value: 1G
+
+  - name: IMAGE_OPTIMIZATION_POLICY
+    description: SkipLayers or None, SkipLayers will squash all layers resulting in a smaller final image size.
+    value: SkipLayers
+
+objects:
+  - apiVersion: v1
+    kind: BuildConfig
+    metadata:
+      name: ${NAME}
+    spec:
+      runPolicy: Serial
+      failedBuildsHistoryLimit: 1
+      successfulBuildsHistoryLimit: 1
+      resources:
+        limits:
+          cpu: ${{LIMIT_CPU}}
+          memory: ${{LIMIT_MEMORY}}
+        requests:
+          cpu: .100
+          memory: 50Mi
+      output:
+        imageLabels:
+          - name: description
+            value: ${DESCRIPTION}
+        to:
+          kind: DockerImage
+          name: images.paas.redhat.com/osd-alert-analysis/${NAME}:${TAG}
+        pushSecret:
+          name: images-paas-push-config
+      source:
+        type: Binary
+      strategy:
+        type: Docker
+        dockerStrategy:
+          dockerfilePath: ${DOCKERFILE_PATH}
+          imageOptimizationPolicy: ${IMAGE_OPTIMIZATION_POLICY}
+
