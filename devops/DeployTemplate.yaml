@@ -76,7 +76,7 @@ objects:
       strategy:
         type: Rolling
       triggers:
-	      - type: "ConfigChange" 
+      - type: "ConfigChange" 
   - apiVersion: v1
     kind: Service
     metadata:
