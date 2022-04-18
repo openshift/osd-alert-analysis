@@ -35,11 +35,11 @@ class SQLAlchemyTestMixin:
         self.session = Session()
         Base.metadata.create_all(self.engine)
 
-        with open("tests/sample_incident.json", encoding="UTF-8") as f:
+        with open("test/sample_incident.json", encoding="UTF-8") as f:
             self.sample_incident = json.load(f)
-        with open("tests/sample_incident_log.json", encoding="UTF-8") as f:
+        with open("test/sample_incident_log.json", encoding="UTF-8") as f:
             self.sample_incident_log = json.load(f)
-        with open("tests/sample_incident_alerts.json", encoding="UTF-8") as f:
+        with open("test/sample_incident_alerts.json", encoding="UTF-8") as f:
             self.sample_incident_alerts = json.load(f)
 
     def tearDown(self):
