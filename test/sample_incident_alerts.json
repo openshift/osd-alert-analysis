@@ -19,11 +19,11 @@
         },
         "severity": "critical",
         "incident": {
-            "id": "Q1S1T0XH11W11X",
+            "id": "Q3DUM0MY38Q39W",
             "type": "incident_reference",
             "summary": "[#868037] [See SNow ticket in Notes] DNSErrors05MinSRE CRITICAL (6)",
-            "self": "https://api.pagerduty.com/incidents/Q1S1T0XH11W11X",
-            "html_url": "https://redhat.pagerduty.com/incidents/Q1S1T0XH11W11X"
+            "self": "https://api.pagerduty.com/incidents/Q3DUM0MY38Q39W",
+            "html_url": "https://redhat.pagerduty.com/incidents/Q3DUM0MY38Q39W"
         },
         "first_trigger_log_entry": {
             "id": "R47CXYZYKT2WL00CS06Y6DI0RVT",
