@@ -329,9 +329,11 @@ class TestAlert(SQLAlchemyTestMixin, unittest.TestCase):
             self.assertEqual(
                 alert.cluster_id, sample_alert_dict["body"]["details"]["cluster_id"]
             )
-            self.assertIn(
-                alert.namespace, sample_alert_dict["body"]["details"]["firing"]
-            )
+            # Only test for namespace if there is one in the firing details
+            if "namespace" in sample_alert_dict["body"]["details"]["firing"]:
+                self.assertIn(
+                    alert.namespace, sample_alert_dict["body"]["details"]["firing"]
+                )
 
             # Test incident relationship
             self.assertEqual(alert.incident.pd_id, sample_alert_dict["incident"]["id"])
@@ -361,7 +363,7 @@ class TestAlert(SQLAlchemyTestMixin, unittest.TestCase):
         self.session.flush()
 
         # Now re-get from database
-        alert_under_test = self.session.get(Alert, self.alert_ids)
+        alert_under_test = self.session.get(Alert, self.alert_ids[0])
         self.assertEqual(alert_under_test.pd_id, updated_sample_alert["id"])
         self.assertEqual(alert_under_test.status, "triggered")
 
