@@ -300,54 +300,60 @@ class TestAlert(SQLAlchemyTestMixin, unittest.TestCase):
         self.session.add(inc)
         self.session.commit()
 
-        self.sample_alert = self.sample_incident_alerts[0]
-        alert = Alert.from_pd_api_response(
-            session=self.session, res_dict=self.sample_alert
-        )
-        self.session.add(alert)
-        self.session.commit()
+        self.sample_alerts = self.sample_incident_alerts
+        self.alert_ids = []
+        for alert_dict in self.sample_alerts:
+            alert = Alert.from_pd_api_response(
+                session=self.session, res_dict=alert_dict
+            )
+            self.session.add(alert)
+            self.session.commit()
 
-        self.alert_id = alert.id
+            self.alert_ids.append(alert.id)
 
     def test_from_pd_api_response(self):
         """
         Tests classmethod from_pd_api_response (called in setUp())
         """
-        alert = self.session.get(Alert, self.alert_id)
-        # Test basic field extraction
-        self.assertEqual(alert.pd_id, self.sample_alert["id"])
-        self.assertEqual(alert.html_url, self.sample_alert["html_url"])
-        self.assertEqual(alert.severity, self.sample_alert["severity"])
-        self.assertEqual(alert.suppressed, self.sample_alert["suppressed"])
-        self.assertEqual(alert.status, self.sample_alert["status"])
-        self.assertEqual(alert.name, self.sample_alert["body"]["details"]["alert_name"])
-        self.assertEqual(
-            alert.cluster_id, self.sample_alert["body"]["details"]["cluster_id"]
-        )
-        self.assertIn(alert.namespace, self.sample_alert["body"]["details"]["firing"])
+        alerts = self.session.query(Alert).filter(Alert.id.in_(self.alert_ids)).all()
+        for alert, sample_alert_dict in zip(alerts, self.sample_alerts):
+            # Test basic field extraction
+            self.assertEqual(alert.pd_id, sample_alert_dict["id"])
+            self.assertEqual(alert.html_url, sample_alert_dict["html_url"])
+            self.assertEqual(alert.severity, sample_alert_dict["severity"])
+            self.assertEqual(alert.suppressed, sample_alert_dict["suppressed"])
+            self.assertEqual(alert.status, sample_alert_dict["status"])
+            self.assertEqual(
+                alert.name, sample_alert_dict["body"]["details"]["alert_name"]
+            )
+            self.assertEqual(
+                alert.cluster_id, sample_alert_dict["body"]["details"]["cluster_id"]
+            )
+            # Only test for namespace if there is one in the firing details
+            if "namespace" in sample_alert_dict["body"]["details"]["firing"]:
+                self.assertIn(
+                    alert.namespace, sample_alert_dict["body"]["details"]["firing"]
+                )
 
-        # Test incident relationship
-        self.assertEqual(alert.incident.pd_id, self.sample_alert["incident"]["id"])
+            # Test incident relationship
+            self.assertEqual(alert.incident.pd_id, sample_alert_dict["incident"]["id"])
 
-        # Test timestamps (cached_at, created_at, shift)
-        self.assertGreaterEqual(alert.cached_at, datetime.now() - timedelta(minutes=3))
-        sample_created_at = datetime.fromisoformat(
-            self.sample_alert["created_at"].replace("Z", "")
-        )
-        self.assertEqual(alert.created_at, sample_created_at)
-        sample_shift = Alert.calculate_shift(sample_created_at)
-        self.assertEqual(alert.shift, sample_shift)
-        ## resolved_at disabled as it seems to be an undocumented API field
-        # sample_resolved_at = datetime.fromisoformat(
-        #     self.sample_alert["resolved_at"].replace("Z", "")
-        # )
-        # self.assertEqual(alert.resolved_at, sample_resolved_at)
+            # Test timestamps (cached_at, created_at, shift)
+            self.assertGreaterEqual(
+                alert.cached_at, datetime.now() - timedelta(minutes=3)
+            )
+            sample_created_at = datetime.fromisoformat(
+                sample_alert_dict["created_at"].replace("Z", "")
+            )
+            self.assertEqual(alert.created_at, sample_created_at)
+            sample_shift = Alert.calculate_shift(sample_created_at)
+            self.assertEqual(alert.shift, sample_shift)
 
     def test_updated_alert(self):
         """
         Tests change of object attributes over time (e.g., due to alert resolution)
         """
-        updated_sample_alert = deepcopy(self.sample_alert)
+        updated_sample_alert = deepcopy(self.sample_alerts[0])
         updated_sample_alert["status"] = "triggered"
         updated_alert = Alert.from_pd_api_response(
             session=self.session, res_dict=updated_sample_alert
@@ -357,7 +363,7 @@ class TestAlert(SQLAlchemyTestMixin, unittest.TestCase):
         self.session.flush()
 
         # Now re-get from database
-        alert_under_test = self.session.get(Alert, self.alert_id)
+        alert_under_test = self.session.get(Alert, self.alert_ids[0])
         self.assertEqual(alert_under_test.pd_id, updated_sample_alert["id"])
         self.assertEqual(alert_under_test.status, "triggered")
 

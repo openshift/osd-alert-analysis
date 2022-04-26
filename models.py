@@ -417,6 +417,6 @@ def _set_firing_details(target, value, oldvalue, initiator):
     namespace_re = re.search(r"namespace = (.*)\n", value)
     try:
         target.namespace = namespace_re.group(1)
-    except IndexError as exc:
+    except (AttributeError, IndexError) as exc:
         logger.warning("%s's firing details are missing a namespace", target)
         logger.debug("Exception details", exc_info=exc)
