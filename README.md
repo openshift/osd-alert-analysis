@@ -5,9 +5,12 @@ alert data.
 
 ## Requirements
  * Python 3.9+
- * a MariaDB/MySQL server
+   * Don't forget to run `pip3 install -r requirements.txt`*
+ * a MariaDB/MySQL server*
  * a PagerDuty API token
  * Docker/Podman/K8s/OpenShift (optional)
+
+*If pip complains about being unable to find a specific version of a dependency module, it's probably because you're using a version of Python older than 3.9. If pip instead complains about failing to build the MariaDB module, make sure you have the MariaDB C Connector, GCC, and the Python headers installed (e.g., on Fedora/RHEL: `dnf install mariadb-connector-c mariadb-connector-c-devel gcc python39-devel`).
 
 ## Initial Caching Database Setup
 The PagerDuty API is too slow/rate-limited to be used directly by the web application. 
@@ -125,11 +128,6 @@ The web application is currently a single-page collection of tables answering th
 questions specified by the `AA_QUESTION_CLASSES` config value. The columns of each table
 support sorting (click the little arrows next to column name) and filtering (enter your
 search term or [filter](https://dash.plotly.com/datatable/filtering#filtering-operators) into the cell below the column name)
-
-## Notebooks
-The `notebooks/` directory contains the exploratory analyses that eventually led to the
-creation of this web application. If you'd like interact with these, install Jupyter
-Notebook from `pip3`, navigate to the directory, and run `jupyter notebook`.
 
 ## Errata
 * Some alert names will be abbreviated when loaded into the cache. See the 
