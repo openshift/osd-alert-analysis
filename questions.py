@@ -278,6 +278,7 @@ class QFlappingShift(Question):
         flap_count = func.count("*").label("flap_count")
         return (
             self._db_session.query(Alert)
+            .filter(Alert.created_at.between(self._since, self._until))
             .join(Incident)
             .group_by(
                 Alert.cluster_id,
