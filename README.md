@@ -12,6 +12,41 @@ alert data.
 
 *If pip complains about being unable to find a specific version of a dependency module, it's probably because you're using a version of Python older than 3.9. If pip instead complains about failing to build the MariaDB module, make sure you have the MariaDB C Connector, GCC, and the Python headers installed (e.g., on Fedora/RHEL: `dnf install mariadb-connector-c mariadb-connector-c-devel gcc python39-devel`).
 
+## Quick Start
+
+*Initial Steps
+   Download VSCode that suits your OS.
+   Clone this repo onto your VSCode.
+
+*Software Installing Commands
+
+sudo yum install python39 # to install python3.9
+python3.9 --version # for checking version of python3.9
+
+sudo yum install mariadb-connector-c
+sudo yum install mariadb-connector-c-devel
+sudo yum install gcc
+sudo yum install python39-devel
+pip3.9 install -r requirements.txt
+
+docker # it will prompt you to download docker if it isn’t installed
+
+*Before Initial Caching Database Setup
+   Run the below command to pull your database image from docker
+
+    docker pull mariadb
+
+  For creating users in the empty database on the SQL server is as follows,
+
+    docker run --detach --env MARIADB_DATABASE=<database_name> --env MARIADB_USER=<username> --env MARIADB_PASSWORD=<user_password> --env MARIADB_ROOT_HOST=<hostname> --env MARIADB_ROOT_PASSWORD=<host_password> -p 3306:3306 mariadb:latest
+
+  After creating the users i.e the above step, follow the below syntax to write your db_string urls in `.env` file.
+
+    database_username:database_password@database_address:3306/database_name
+
+  After the above steps, you can proceed with populating your database using `updater.py`
+
+
 ## Initial Caching Database Setup
 The PagerDuty API is too slow/rate-limited to be used directly by the web application. 
 Instead, you'll need to set up, populate, and regularly refresh a caching database.
