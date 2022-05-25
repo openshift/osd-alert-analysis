@@ -14,11 +14,11 @@ alert data.
 
 ## Quick Start
 
-*Initial Steps
+ Initial Steps
    Download VSCode that suits your OS.
    Clone this repo onto your VSCode.
 
-*Software Installing Commands
+ Software Installing Commands
 
 sudo yum install python39 # to install python3.9
 python3.9 --version # for checking version of python3.9
@@ -31,7 +31,7 @@ pip3.9 install -r requirements.txt
 
 docker # it will prompt you to download docker if it isn’t installed
 
-*Before Initial Caching Database Setup
+ Before Initial Caching Database Setup
    Run the below command to pull your database image from docker
 
     docker pull mariadb
