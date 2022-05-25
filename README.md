@@ -21,16 +21,16 @@ Initial Steps
 
 Software Installing Commands
 
-sudo yum install python39 # to install python3.9
-python3.9 --version # for checking version of python3.9
+ * sudo yum install python39 # to install python3.9
+ * python3.9 --version # for checking version of python3.9
 
-sudo yum install mariadb-connector-c
-sudo yum install mariadb-connector-c-devel
-sudo yum install gcc
-sudo yum install python39-devel
-pip3.9 install -r requirements.txt
+ * sudo yum install mariadb-connector-c
+ * sudo yum install mariadb-connector-c-devel
+ * sudo yum install gcc
+ * sudo yum install python39-devel
+ * pip3.9 install -r requirements.txt
 
-docker # it will prompt you to download docker if it isn’t installed
+ * docker # it will prompt you to download docker if it isn’t installed
 
 Before Initial Caching Database Setup
  * Run the below command to pull your database image from docker
