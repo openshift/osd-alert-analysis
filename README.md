@@ -14,11 +14,12 @@ alert data.
 
 ## Quick Start
 
- Initial Steps
-   Download VSCode that suits your OS.
-   Clone this repo onto your VSCode.
+Initial Steps
 
- Software Installing Commands
+  * Download VSCode that suits your OS.
+  * Clone this repo onto your VSCode.
+
+Software Installing Commands
 
 sudo yum install python39 # to install python3.9
 python3.9 --version # for checking version of python3.9
@@ -31,20 +32,20 @@ pip3.9 install -r requirements.txt
 
 docker # it will prompt you to download docker if it isn’t installed
 
- Before Initial Caching Database Setup
-   Run the below command to pull your database image from docker
+Before Initial Caching Database Setup
+ * Run the below command to pull your database image from docker
 
     docker pull mariadb
 
-  For creating users in the empty database on the SQL server is as follows,
+ * For creating users in the empty database on the SQL server is as follows,
 
     docker run --detach --env MARIADB_DATABASE=<database_name> --env MARIADB_USER=<username> --env MARIADB_PASSWORD=<user_password> --env MARIADB_ROOT_HOST=<hostname> --env MARIADB_ROOT_PASSWORD=<host_password> -p 3306:3306 mariadb:latest
 
-  After creating the users i.e the above step, follow the below syntax to write your db_string urls in `.env` file.
+ * After creating the users i.e the above step, follow the below syntax to write your db_string urls in `.env` file.
 
     database_username:database_password@database_address:3306/database_name
 
-  After the above steps, you can proceed with populating your database using `updater.py`
+ * After the above steps, you can proceed with populating your database using `updater.py`
 
 
 ## Initial Caching Database Setup
