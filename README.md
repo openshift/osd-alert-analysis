@@ -23,9 +23,7 @@ pip3.9 install -r requirements.txt
 # We'll use a MariaDB container as our local database 
 podman pull mariadb
 # Fill in the <bracketed> values before running the command below
-      ```
-      below command creates an empty database and users
-      ```
+    # below command creates an empty database and users
 docker run --detach --env MARIADB_DATABASE=<database_name> --env MARIADB_USER=<user_name> --env MARIADB_PASSWORD=<user_password> --env MARIADB_ROOT_HOST=<host_name> --env MARIADB_ROOT_PASSWORD=<host_password> -p 3306:3306 mariadb:latest
 ```
 
