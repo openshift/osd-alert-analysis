@@ -14,39 +14,26 @@ alert data.
 
 ## Quick Start
 
-Initial Steps
+Clone this repo and `cd` into it. Assuming you're using RHEL or Fedora, run the following commands. Users of other Linux distributions should translate commands accordingly (e.g., Debian/Ubuntu users can use `apt` instead of `dnf`).
 
-  * Download VSCode that suits your OS.
-  * Clone this repo onto your VSCode.
+```bash
+# Install dependencies
+sudo dnf install python39 python39-devel mariadb-connector-c mariadb-connector-c-devel gcc podman
+pip3.9 install -r requirements.txt
+# We'll use a MariaDB container as our local database 
+podman pull mariadb
+# Fill in the <bracketed> values before running the command below
+      ```
+      below command creates an empty database and users
+      ```
+docker run --detach --env MARIADB_DATABASE=<database_name> --env MARIADB_USER=<user_name> --env MARIADB_PASSWORD=<user_password> --env MARIADB_ROOT_HOST=<host_name> --env MARIADB_ROOT_PASSWORD=<host_password> -p 3306:3306 mariadb:latest
+```
 
-Software Installing Commands
-
- * sudo yum install python39 # to install python3.9
- * python3.9 --version # for checking version of python3.9
-
- * sudo yum install mariadb-connector-c
- * sudo yum install mariadb-connector-c-devel
- * sudo yum install gcc
- * sudo yum install python39-devel
- * pip3.9 install -r requirements.txt
-
- * docker # it will prompt you to download docker if it isn’t installed
-
-Before Initial Caching Database Setup
- * Run the below command to pull your database image from docker
-
-    docker pull mariadb
-
- * For creating users in the empty database on the SQL server is as follows,
-
-    docker run --detach --env MARIADB_DATABASE=<database_name> --env MARIADB_USER=<user_name> --env MARIADB_PASSWORD=<user_password> --env MARIADB_ROOT_HOST=<host_name> --env MARIADB_ROOT_PASSWORD=<host_password> -p 3306:3306 mariadb:latest
-
- * After creating the users i.e the above step, follow the below syntax to write your db_string urls in `.env` file.
-
-    database_username:database_password@database_address:3306/database_name
-
- * After the above steps, you can proceed with populating your database using `updater.py`
-
+After creating the empty database as shown in the above step, follow the below syntax to create the database connection URLs that you'll need for `AA_RO_DB_STRING` and `AA_RW_DB_STRING` in `.env` file.
+```
+database_username:database_password@127.0.0.1:3306/database_name
+```
+You may now proceed with populating your database using `updater.py`, as shown in the next section.
 
 ## Initial Caching Database Setup
 The PagerDuty API is too slow/rate-limited to be used directly by the web application. 
