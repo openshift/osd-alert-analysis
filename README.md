@@ -39,7 +39,7 @@ Before Initial Caching Database Setup
 
  * For creating users in the empty database on the SQL server is as follows,
 
-    docker run --detach --env MARIADB_DATABASE=<database_name> --env MARIADB_USER=<username> --env MARIADB_PASSWORD=<user_password> --env MARIADB_ROOT_HOST=<hostname> --env MARIADB_ROOT_PASSWORD=<host_password> -p 3306:3306 mariadb:latest
+    docker run --detach --env MARIADB_DATABASE=<database_name> --env MARIADB_USER=<user_name> --env MARIADB_PASSWORD=<user_password> --env MARIADB_ROOT_HOST=<host_name> --env MARIADB_ROOT_PASSWORD=<host_password> -p 3306:3306 mariadb:latest
 
  * After creating the users i.e the above step, follow the below syntax to write your db_string urls in `.env` file.
 
