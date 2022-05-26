@@ -22,9 +22,8 @@ sudo dnf install python39 python39-devel mariadb-connector-c mariadb-connector-c
 pip3.9 install -r requirements.txt
 # We'll use a MariaDB container as our local database 
 podman pull mariadb
-# Fill in the <bracketed> values before running the command below
-    # below command creates an empty database and users
-docker run --detach --env MARIADB_DATABASE=<database_name> --env MARIADB_USER=<user_name> --env MARIADB_PASSWORD=<user_password> --env MARIADB_ROOT_HOST=<host_name> --env MARIADB_ROOT_PASSWORD=<host_password> -p 3306:3306 mariadb:latest
+# Fill in the <bracketed> values before running the command below, which creates an empty database and users
+podman run --detach --env MARIADB_DATABASE=<database_name> --env MARIADB_USER=<user_name> --env MARIADB_PASSWORD=<user_password> --env MARIADB_ROOT_HOST=<host_name> --env MARIADB_ROOT_PASSWORD=<host_password> -p 3306:3306 mariadb:latest
 ```
 
 After creating the empty database as shown in the above step, follow the below syntax to create the database connection URLs that you'll need for `AA_RO_DB_STRING` and `AA_RW_DB_STRING` in `.env` file.
