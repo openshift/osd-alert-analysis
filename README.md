@@ -50,7 +50,7 @@ AA_RW_DB_STRING=sqlite+pysqlite:///:memory: # Access a read-write account
 
 # QUESTION_CLASSES is a list of the questions you'd like to display on the web UI.
 # These should be class names from questions.py
-AA_QUESTION_CLASSES=QNeverAcknowledged:QNeverAcknowledgedSelfResolved:QFlappingShift
+AA_QUESTION_CLASSES=QMostFrequent:QNeverAcknowledgedSelfResolved:QFlappingShift
 ```
 *Note*: if you're just experimenting/testing, feel free the leave the SQLite database
 string shown above as is. Just know that this will create the database in-memory and
