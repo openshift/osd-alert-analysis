@@ -138,6 +138,23 @@ class Question:
         return self._id
 
 
+class QMostFrequent(Question):
+    """
+    Which alerts fire most frequently?
+    """
+
+    def __init__(self, db_session, since, until):
+        super().__init__(db_session, since, until)
+        self._id = "mfreq"
+        self._description = "Which alerts fire most frequently?"
+
+    def _query(self):
+        # This super-simple question doesn't require any filters beyond the date range
+        return self._db_session.query(Alert).filter(
+            Alert.created_at.between(self._since, self._until)
+        )
+
+
 class QNeverAcknowledged(Question):
     """
     Which alerts have yet to be acknowledged by SRE?
