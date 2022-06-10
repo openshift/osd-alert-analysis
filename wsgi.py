@@ -15,13 +15,14 @@ app = Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
 application = app.server
 
 
-def get_navbar(since, until, max_date):
+def get_navbar(since, until, max_date, region):
     """
     Returns navbar page component
 
     :param since: datetime.datetime for start of query time window
     :param until: datetime.datetime for end of query time window
-    :max_date: maximum datetime.date allowed to be picked by date picker
+    :param max_date: maximum datetime.date allowed to be picked by date picker
+    :param region: current query Region enum
     """
     return dbc.NavbarSimple(
         [
@@ -37,18 +38,13 @@ def get_navbar(since, until, max_date):
                             updatemode="bothdates",
                             className="dash-bootstrap",
                         ),
-                        dbc.DropdownMenu(
-                            [
-                                dbc.DropdownMenuItem("Global", id="global-reg-btn"),
-                                dbc.DropdownMenuItem("APAC", id="apac-reg-btn"),
-                                dbc.DropdownMenuItem("EMEA", id="emea-reg-btn"),
-                                dbc.DropdownMenuItem("NASA", id="nasa-reg-btn"),
+                        dbc.Select(
+                            id="region-select",
+                            options=[
+                                {"label": reg.value, "value": reg.value}
+                                for _, reg in Region.__members__.items()
                             ],
-                            label="Region",
-                            align_end=True,
-                            addon_type="append",
-                            color="secondary",
-                            in_navbar=True,
+                            value=region.value,
                         ),
                     ]
                 )
@@ -92,18 +88,22 @@ def display_page(pathname):
     """
     max_date = datetime.now(timezone.utc) - timedelta(days=1)
     try:
-        clean_dates_list = re.sub(r"[^\d/-]+", "", pathname.strip("/")).rsplit("/", 2)
-        since = datetime.fromisoformat(clean_dates_list[0])
-        until = datetime.fromisoformat(clean_dates_list[1])
+        clean_params_list = re.sub(r"[^\d\w/-]+", "", pathname.strip("/")).rsplit(
+            "/", 3
+        )
+        since = datetime.fromisoformat(clean_params_list[0])
+        until = datetime.fromisoformat(clean_params_list[1])
+        region = Region(clean_params_list[2])
     except (ValueError, IndexError):
         since = max_date - timedelta(days=30)
         until = max_date
+        region = Region.GLOBAL
 
-    session = WebUISession(since, until)
+    session = WebUISession(since, until, region)
 
     return html.Div(
         [
-            get_navbar(since, until, max_date),
+            get_navbar(since, until, max_date, region),
             dbc.Container(
                 list(question_answer_generator(session.question_instances)),
                 fluid=False,
@@ -116,12 +116,9 @@ def display_page(pathname):
     Output("url", "pathname"),
     Input("date-picker", "start_date"),
     Input("date-picker", "end_date"),
-    Input("global-reg-btn", "n_clicks_timestamp"),
-    Input("apac-reg-btn", "n_clicks_timestamp"),
-    Input("emea-reg-btn", "n_clicks_timestamp"),
-    Input("nasa-reg-btn", "n_clicks_timestamp"),
+    Input("region-select", "value"),
 )
-def update_date_range(start_date, end_date, global_ts, apac_ts, emea_ts, nasa_ts):
+def update_date_range(start_date, end_date, region):
     """
     Query date range picker input handler
     """
@@ -129,28 +126,12 @@ def update_date_range(start_date, end_date, global_ts, apac_ts, emea_ts, nasa_ts
     try:
         path_string += date.fromisoformat(start_date).isoformat()
         path_string += "/" + date.fromisoformat(end_date).isoformat()
-        path_string
+        path_string += "/" + region
     except ValueError:
         # pylint: disable=raise-missing-from
         raise PreventUpdate
     else:
         return path_string
-
-
-def determine_selected_region(global_ts, apac_ts, emea_ts, nasa_ts):
-    """
-    Determines the region that was selected via dropdown menu
-    """
-    clicked_btn = max(global_ts, apac_ts, emea_ts, nasa_ts)
-
-    if clicked_btn == apac_ts:
-        return Region.APAC
-    elif clicked_btn == emea_ts:
-        return Region.EMEA
-    elif clicked_btn == nasa_ts:
-        return Region.NASA
-    else:
-        return Region.GLOBAL
 
 
 if __name__ == "__main__":

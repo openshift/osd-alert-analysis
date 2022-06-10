@@ -12,7 +12,12 @@ from models import Base
 
 
 class Region(Enum):
-    GLOBAL = "*"
+    """
+    Enumerated type for on-call regions. Should roughly match regions defined in DB's
+    shift column
+    """
+
+    GLOBAL = "Global"
     APAC = "APAC"
     EMEA = "EMEA"
     NASA = "NASA"
