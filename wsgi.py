@@ -9,7 +9,7 @@ from dash import Dash, dcc, html
 from dash.dependencies import Input, Output
 from dash.exceptions import PreventUpdate
 
-from webui import StandardDataTable, WebUISession
+from webui import StandardDataTable, WebUISession, Region
 
 app = Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
 application = app.server
@@ -25,19 +25,34 @@ def get_navbar(since, until, max_date):
     """
     return dbc.NavbarSimple(
         [
-            dbc.InputGroup(
-                [
-                    # dbc.InputGroupText("")
-                    dcc.DatePickerRange(
-                        id="date-picker",
-                        start_date=since.date(),
-                        end_date=until.date(),
-                        max_date_allowed=max_date,
-                        updatemode="bothdates",
-                        className="dash-bootstrap",
-                    )
-                ]
-            )
+            dbc.NavItem(
+                dbc.InputGroup(
+                    [
+                        # dbc.InputGroupText("")
+                        dcc.DatePickerRange(
+                            id="date-picker",
+                            start_date=since.date(),
+                            end_date=until.date(),
+                            max_date_allowed=max_date,
+                            updatemode="bothdates",
+                            className="dash-bootstrap",
+                        ),
+                        dbc.DropdownMenu(
+                            [
+                                dbc.DropdownMenuItem("Global", id="global-reg-btn"),
+                                dbc.DropdownMenuItem("APAC", id="apac-reg-btn"),
+                                dbc.DropdownMenuItem("EMEA", id="emea-reg-btn"),
+                                dbc.DropdownMenuItem("NASA", id="nasa-reg-btn"),
+                            ],
+                            label="Region",
+                            align_end=True,
+                            addon_type="append",
+                            color="secondary",
+                            in_navbar=True,
+                        ),
+                    ]
+                )
+            ),
         ],
         brand="OSD Alert Analysis",
         brand_href="#",
@@ -101,8 +116,12 @@ def display_page(pathname):
     Output("url", "pathname"),
     Input("date-picker", "start_date"),
     Input("date-picker", "end_date"),
+    Input("global-reg-btn", "n_clicks_timestamp"),
+    Input("apac-reg-btn", "n_clicks_timestamp"),
+    Input("emea-reg-btn", "n_clicks_timestamp"),
+    Input("nasa-reg-btn", "n_clicks_timestamp"),
 )
-def update_date_range(start_date, end_date):
+def update_date_range(start_date, end_date, global_ts, apac_ts, emea_ts, nasa_ts):
     """
     Query date range picker input handler
     """
@@ -110,11 +129,28 @@ def update_date_range(start_date, end_date):
     try:
         path_string += date.fromisoformat(start_date).isoformat()
         path_string += "/" + date.fromisoformat(end_date).isoformat()
+        path_string
     except ValueError:
         # pylint: disable=raise-missing-from
         raise PreventUpdate
     else:
         return path_string
+
+
+def determine_selected_region(global_ts, apac_ts, emea_ts, nasa_ts):
+    """
+    Determines the region that was selected via dropdown menu
+    """
+    clicked_btn = max(global_ts, apac_ts, emea_ts, nasa_ts)
+
+    if clicked_btn == apac_ts:
+        return Region.APAC
+    elif clicked_btn == emea_ts:
+        return Region.EMEA
+    elif clicked_btn == nasa_ts:
+        return Region.NASA
+    else:
+        return Region.GLOBAL
 
 
 if __name__ == "__main__":
