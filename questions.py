@@ -153,16 +153,13 @@ class QMostFrequent(Question):
     Which alerts fire most frequently?
     """
 
-    def __init__(self, db_session, since, until):
-        super().__init__(db_session, since, until)
+    def __init__(self, db_session, since, until, region):
+        super().__init__(db_session, since, until, region)
         self._id = "mfreq"
         self._description = "Which alerts fire most frequently?"
 
-    def _query(self):
-        # This super-simple question doesn't require any filters beyond the date range
-        return self._db_session.query(Alert).filter(
-            Alert.created_at.between(self._since, self._until)
-        )
+    # This super-simple question doesn't require any filters beyond the date range, so
+    # we can use the parent class's implementation of _query()
 
 
 class QNeverAcknowledged(Question):
@@ -303,8 +300,8 @@ class QFlappingShift(Question):
         # First create a subquery that counts flaps per-shift-date
         flap_count = func.count("*").label("flap_count")
         subq = (
-            self._db_session.query(Alert)
-            .filter(Alert.created_at.between(self._since, self._until))
+            super()
+            ._query()
             .join(Incident)
             .group_by(
                 Alert.cluster_id,
