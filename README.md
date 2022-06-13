@@ -12,6 +12,26 @@ alert data.
 
 *If pip complains about being unable to find a specific version of a dependency module, it's probably because you're using a version of Python older than 3.9. If pip instead complains about failing to build the MariaDB module, make sure you have the MariaDB C Connector, GCC, and the Python headers installed (e.g., on Fedora/RHEL: `dnf install mariadb-connector-c mariadb-connector-c-devel gcc python39-devel`).
 
+## Quick Start
+
+Clone this repo and `cd` into it. Assuming you're using RHEL or Fedora, run the following commands. Users of other Linux distributions should translate commands accordingly (e.g., Debian/Ubuntu users can use `apt` instead of `dnf`).
+
+```bash
+# Install dependencies
+sudo dnf install python39 python39-devel mariadb-connector-c mariadb-connector-c-devel gcc podman
+pip3.9 install -r requirements.txt
+# We'll use a MariaDB container as our local database 
+podman pull mariadb
+# Fill in the <bracketed> values before running the command below, which creates an empty database and users
+podman run --detach --env MARIADB_DATABASE=<database_name> --env MARIADB_USER=<user_name> --env MARIADB_PASSWORD=<user_password> --env MARIADB_ROOT_HOST=<host_name> --env MARIADB_ROOT_PASSWORD=<host_password> -p 3306:3306 mariadb:latest
+```
+
+After creating the empty database as shown in the above step, follow the below syntax to create the database connection URLs that you'll need for `AA_RO_DB_STRING` and `AA_RW_DB_STRING` in `.env` file.
+```
+database_username:database_password@127.0.0.1:3306/database_name
+```
+You may now proceed with populating your database using `updater.py`, as shown in the next section.
+
 ## Initial Caching Database Setup
 The PagerDuty API is too slow/rate-limited to be used directly by the web application. 
 Instead, you'll need to set up, populate, and regularly refresh a caching database.
@@ -30,7 +50,7 @@ AA_RW_DB_STRING=sqlite+pysqlite:///:memory: # Access a read-write account
 
 # QUESTION_CLASSES is a list of the questions you'd like to display on the web UI.
 # These should be class names from questions.py
-AA_QUESTION_CLASSES=QNeverAcknowledged:QNeverAcknowledgedSelfResolved:QFlappingShift
+AA_QUESTION_CLASSES=QMostFrequent:QNeverAcknowledgedSelfResolved:QFlappingShift
 ```
 *Note*: if you're just experimenting/testing, feel free the leave the SQLite database
 string shown above as is. Just know that this will create the database in-memory and

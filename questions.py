@@ -148,6 +148,23 @@ class Question:
         return self._id
 
 
+class QMostFrequent(Question):
+    """
+    Which alerts fire most frequently?
+    """
+
+    def __init__(self, db_session, since, until):
+        super().__init__(db_session, since, until)
+        self._id = "mfreq"
+        self._description = "Which alerts fire most frequently?"
+
+    def _query(self):
+        # This super-simple question doesn't require any filters beyond the date range
+        return self._db_session.query(Alert).filter(
+            Alert.created_at.between(self._since, self._until)
+        )
+
+
 class QNeverAcknowledged(Question):
     """
     Which alerts have yet to be acknowledged by SRE?
@@ -283,9 +300,11 @@ class QFlappingShift(Question):
         self._column_names = ["cluster", "name", "namespace", "urgency", "flaps"]
 
     def _query(self):
+        # First create a subquery that counts flaps per-shift-date
         flap_count = func.count("*").label("flap_count")
-        return (
+        subq = (
             self._db_session.query(Alert)
+            .filter(Alert.created_at.between(self._since, self._until))
             .join(Incident)
             .group_by(
                 Alert.cluster_id,
@@ -302,7 +321,14 @@ class QFlappingShift(Question):
                 flap_count,
             )
             .having(flap_count > 1)
-            .order_by(desc(flap_count))
+        ).subquery()
+
+        # Then add up the flaps for alerts that flapped on multiple shift-days
+        flap_sum = func.sum(subq.c.flap_count).label("flap_sum")
+        return (
+            self._db_session.query(subq, flap_sum)
+            .group_by(subq.c.cluster_id, subq.c.name, subq.c.namespace, subq.c.urgency)
+            .order_by(desc(flap_sum))
         )
 
     def get_answer(self):
