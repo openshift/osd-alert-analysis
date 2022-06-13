@@ -32,10 +32,13 @@ class StandardDataTable(DataTable):
         """
         Simplified, opinionated constructor for DataTable
         """
+        # Sort by the last column in descending order
+        sorted_col = list(cd["id"] for cd in columns)[-1]
         super().__init__(
             row_selectable="single",
             filter_action="native",
             sort_action="native",
+            sort_by=[{"column_id": sorted_col, "direction": "desc"}],
             sort_mode="multi",
             page_action="native",
             page_current=0,
