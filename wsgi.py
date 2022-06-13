@@ -86,7 +86,7 @@ def display_page(pathname):
     """
     Generates page content on URL change (i.e., page load)
     """
-    max_date = datetime.now(timezone.utc) - timedelta(days=1)
+    max_date = datetime.now(timezone.utc)
     try:
         clean_params_list = re.sub(r"[^\d\w/-]+", "", pathname.strip("/")).rsplit(
             "/", 3
@@ -95,7 +95,7 @@ def display_page(pathname):
         until = datetime.fromisoformat(clean_params_list[1])
         region = Region(clean_params_list[2])
     except (ValueError, IndexError):
-        since = max_date - timedelta(days=30)
+        since = max_date - timedelta(days=7)
         until = max_date
         region = Region.GLOBAL
 
