@@ -52,7 +52,7 @@ class Question:
     Base class for questions
     """
 
-    def __init__(self, db_session, since, until):
+    def __init__(self, db_session, since, until, region):
         """
         Constructor for Questions. Mainly sets up DB connection
 
@@ -61,9 +61,12 @@ class Question:
             which the question query will be evaluated
         :param until: a datetime.datetime containing the end of the time window over
             which the question query will be evaluated
+        :param region: a string representing the region (i.e., shift during which the
+            alert first fired) of the incidents queried (e.g., "NASA")
         """
         self._since = since
         self._until = until
+        self._region = region
         self._db_session = db_session
 
         self._column_names = STANDARD_COLUMNS.copy()
@@ -101,7 +104,14 @@ class Question:
         """
         Returns the SQLAlchemy query used to answer this Question
         """
-        raise NotImplementedError
+        # Filter solely on date range by default
+        base_query = self._db_session.query(Alert).filter(
+            Alert.created_at.between(self._since, self._until)
+        )
+        if not self._region or self._region == "Global":
+            return base_query
+        # Filter also on Region if specified
+        return base_query.filter(Alert.shift.contains(self._region))
 
     def get_answer(self):
         """
@@ -143,16 +153,13 @@ class QMostFrequent(Question):
     Which alerts fire most frequently?
     """
 
-    def __init__(self, db_session, since, until):
-        super().__init__(db_session, since, until)
+    def __init__(self, db_session, since, until, region):
+        super().__init__(db_session, since, until, region)
         self._id = "mfreq"
         self._description = "Which alerts fire most frequently?"
 
-    def _query(self):
-        # This super-simple question doesn't require any filters beyond the date range
-        return self._db_session.query(Alert).filter(
-            Alert.created_at.between(self._since, self._until)
-        )
+    # This super-simple question doesn't require any filters beyond the date range, so
+    # we can use the parent class's implementation of _query()
 
 
 class QNeverAcknowledged(Question):
@@ -160,17 +167,15 @@ class QNeverAcknowledged(Question):
     Which alerts have yet to be acknowledged by SRE?
     """
 
-    def __init__(self, db_session, since, until):
-        super().__init__(db_session, since, until)
+    def __init__(self, db_session, since, until, region):
+        super().__init__(db_session, since, until, region)
         self._id = "nack"
         self._description = "Which alerts have yet to be acknowledged by SRE?"
 
     def _query(self):
         # The ~ operator negates the condition
         return (
-            self._db_session.query(Alert)
-            .filter(Alert.created_at.between(self._since, self._until))
-            .filter(Alert.incident.has(~Incident.acknowledged_by.any()))
+            super()._query().filter(Alert.incident.has(~Incident.acknowledged_by.any()))
         )
 
 
@@ -179,16 +184,16 @@ class QNeverAcknowledgedSelfResolved(Question):
     Which alerts self-resolve without acknowledgement?
     """
 
-    def __init__(self, db_session, since, until):
-        super().__init__(db_session, since, until)
+    def __init__(self, db_session, since, until, region):
+        super().__init__(db_session, since, until, region)
         self._id = "nacksres"
         self._description = "Which alerts self-resolve without acknowledgement?"
 
     def _query(self):
         # The ~ operator negates the condition
         return (
-            self._db_session.query(Alert)
-            .filter(Alert.created_at.between(self._since, self._until))
+            super()
+            ._query()
             .filter(Alert.incident.has(~Incident.acknowledged_by.any()))
             .filter(
                 Alert.incident.has(
@@ -203,16 +208,16 @@ class QAcknowledgedUnresolved(Question):
     Which alerts are acknowledged but never resolved?
     """
 
-    def __init__(self, db_session, since, until):
-        super().__init__(db_session, since, until)
+    def __init__(self, db_session, since, until, region):
+        super().__init__(db_session, since, until, region)
         self._id = "ackures"
         self._description = "Which alerts are acknowledged but never resolved?"
 
     def _query(self):
         # pylint: disable=singleton-comparison
         return (
-            self._db_session.query(Alert)
-            .filter(Alert.created_at.between(self._since, self._until))
+            super()
+            ._query()
             .filter(Alert.incident.has(Incident.acknowledged_by.any()))
             .filter(Alert.incident.has(Incident.resolved_at == None))
         )
@@ -223,16 +228,16 @@ class QSelfResolvedImmediately(Question):
     Which alerts self-resolve w/in 15 minutes?
     """
 
-    def __init__(self, db_session, since, until):
-        super().__init__(db_session, since, until)
+    def __init__(self, db_session, since, until, region):
+        super().__init__(db_session, since, until, region)
         self._id = "sres15"
         self._description = "Which alerts self-resolve within 15 minutes?"
 
     def _query(self):
         # pylint: disable=singleton-comparison
         return (
-            self._db_session.query(Alert)
-            .filter(Alert.created_at.between(self._since, self._until))
+            super()
+            ._query()
             .filter(~Alert.incident.has(Incident.resolved_at == None))
             .filter(
                 Alert.incident.has(
@@ -253,16 +258,16 @@ class QSREResolvedImmediately(Question):
     Which alerts are resolved by SRE within 15 minutes of firing?
     """
 
-    def __init__(self, db_session, since, until):
-        super().__init__(db_session, since, until)
+    def __init__(self, db_session, since, until, region):
+        super().__init__(db_session, since, until, region)
         self._id = "eres15"
         self._description = "Which alerts are resolved within 15 minutes by SRE?"
 
     def _query(self):
         # pylint: disable=singleton-comparison
         return (
-            self._db_session.query(Alert)
-            .filter(Alert.created_at.between(self._since, self._until))
+            super()
+            ._query()
             .filter(~Alert.incident.has(Incident.resolved_at == None))
             .filter(
                 ~Alert.incident.has(
@@ -283,8 +288,8 @@ class QFlappingShift(Question):
     Which alerts fire more than once per on-call shift (in the same cluster)?
     """
 
-    def __init__(self, db_session, since, until):
-        super().__init__(db_session, since, until)
+    def __init__(self, db_session, since, until, region):
+        super().__init__(db_session, since, until, region)
         self._id = "sflap"
         self._description = (
             "Which alerts fire more than once per on-call shift (in the same cluster)?"
@@ -295,8 +300,8 @@ class QFlappingShift(Question):
         # First create a subquery that counts flaps per-shift-date
         flap_count = func.count("*").label("flap_count")
         subq = (
-            self._db_session.query(Alert)
-            .filter(Alert.created_at.between(self._since, self._until))
+            super()
+            ._query()
             .join(Incident)
             .group_by(
                 Alert.cluster_id,

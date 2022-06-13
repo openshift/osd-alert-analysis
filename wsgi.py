@@ -9,35 +9,46 @@ from dash import Dash, dcc, html
 from dash.dependencies import Input, Output
 from dash.exceptions import PreventUpdate
 
-from webui import StandardDataTable, WebUISession
+from webui import StandardDataTable, WebUISession, Region
 
 app = Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
 application = app.server
 
 
-def get_navbar(since, until, max_date):
+def get_navbar(since, until, max_date, region):
     """
     Returns navbar page component
 
     :param since: datetime.datetime for start of query time window
     :param until: datetime.datetime for end of query time window
-    :max_date: maximum datetime.date allowed to be picked by date picker
+    :param max_date: maximum datetime.date allowed to be picked by date picker
+    :param region: current query Region enum
     """
     return dbc.NavbarSimple(
         [
-            dbc.InputGroup(
-                [
-                    # dbc.InputGroupText("")
-                    dcc.DatePickerRange(
-                        id="date-picker",
-                        start_date=since.date(),
-                        end_date=until.date(),
-                        max_date_allowed=max_date,
-                        updatemode="bothdates",
-                        className="dash-bootstrap",
-                    )
-                ]
-            )
+            dbc.NavItem(
+                dbc.InputGroup(
+                    [
+                        # dbc.InputGroupText("")
+                        dcc.DatePickerRange(
+                            id="date-picker",
+                            start_date=since.date(),
+                            end_date=until.date(),
+                            max_date_allowed=max_date,
+                            updatemode="bothdates",
+                            className="dash-bootstrap",
+                        ),
+                        dbc.Select(
+                            id="region-select",
+                            options=[
+                                {"label": reg.value, "value": reg.value}
+                                for _, reg in Region.__members__.items()
+                            ],
+                            value=region.value,
+                        ),
+                    ]
+                )
+            ),
         ],
         brand="OSD Alert Analysis",
         brand_href="#",
@@ -75,20 +86,24 @@ def display_page(pathname):
     """
     Generates page content on URL change (i.e., page load)
     """
-    max_date = datetime.now(timezone.utc) - timedelta(days=1)
+    max_date = datetime.now(timezone.utc)
     try:
-        clean_dates_list = re.sub(r"[^\d/-]+", "", pathname.strip("/")).rsplit("/", 2)
-        since = datetime.fromisoformat(clean_dates_list[0])
-        until = datetime.fromisoformat(clean_dates_list[1])
+        clean_params_list = re.sub(r"[^\d\w/-]+", "", pathname.strip("/")).rsplit(
+            "/", 3
+        )
+        since = datetime.fromisoformat(clean_params_list[0])
+        until = datetime.fromisoformat(clean_params_list[1])
+        region = Region(clean_params_list[2])
     except (ValueError, IndexError):
-        since = max_date - timedelta(days=30)
+        since = max_date - timedelta(days=7)
         until = max_date
+        region = Region.GLOBAL
 
-    session = WebUISession(since, until)
+    session = WebUISession(since, until, region)
 
     return html.Div(
         [
-            get_navbar(since, until, max_date),
+            get_navbar(since, until, max_date, region),
             dbc.Container(
                 list(question_answer_generator(session.question_instances)),
                 fluid=False,
@@ -101,8 +116,9 @@ def display_page(pathname):
     Output("url", "pathname"),
     Input("date-picker", "start_date"),
     Input("date-picker", "end_date"),
+    Input("region-select", "value"),
 )
-def update_date_range(start_date, end_date):
+def update_date_range(start_date, end_date, region):
     """
     Query date range picker input handler
     """
@@ -110,6 +126,7 @@ def update_date_range(start_date, end_date):
     try:
         path_string += date.fromisoformat(start_date).isoformat()
         path_string += "/" + date.fromisoformat(end_date).isoformat()
+        path_string += "/" + region
     except ValueError:
         # pylint: disable=raise-missing-from
         raise PreventUpdate
