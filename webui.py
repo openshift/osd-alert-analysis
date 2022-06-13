@@ -74,4 +74,6 @@ class WebUISession:
         self.question_instances = []
         for question_class_name in QUESTION_CLASSES:
             question = getattr(questions, question_class_name)
-            self.question_instances.append(question(self.db_session, since, until))
+            self.question_instances.append(
+                question(self.db_session, since, until, region.value)
+            )
