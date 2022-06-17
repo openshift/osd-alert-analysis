@@ -13,6 +13,7 @@ from webui import StandardDataTable, WebUISession, Region
 
 app = Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
 application = app.server
+app.title = "OSD Alert Analysis"
 
 
 def get_navbar(since, until, max_date, region):
