@@ -1,4 +1,4 @@
-# alert-analysis
+# OSD Alert Analysis
 
 Web application and supporting CLI tools for analyzing OpenShift Dedicated PagerDuty
 alert data.
@@ -13,8 +13,9 @@ alert data.
 *If pip complains about being unable to find a specific version of a dependency module, it's probably because you're using a version of Python older than 3.9. If pip instead complains about failing to build the MariaDB module, make sure you have the MariaDB C Connector, GCC, and the Python headers installed (e.g., on Fedora/RHEL: `dnf install mariadb-connector-c mariadb-connector-c-devel gcc python39-devel`).
 
 ## Quick Start
+*This section will help you set up a basic testing/development environment. These settings should *not* be used for production installations.*
 
-Clone this repo and `cd` into it. Assuming you're using RHEL or Fedora, run the following commands. Users of other Linux distributions should translate commands accordingly (e.g., Debian/Ubuntu users can use `apt` instead of `dnf`).
+Clone this repo and `cd` into it. Assuming you're using RHEL or Fedora, run the following commands. Users of other Linux distributions should translate commands accordingly (e.g., Debian/Ubuntu users can use `apt` instead of `dnf`, non-podman users can replace `podman` with `docker`, etc.).
 
 ```bash
 # Install dependencies
@@ -22,15 +23,31 @@ sudo dnf install python39 python39-devel mariadb-connector-c mariadb-connector-c
 pip3.9 install -r requirements.txt
 # We'll use a MariaDB container as our local database 
 podman pull mariadb
-# Fill in the <bracketed> values before running the command below, which creates an empty database and users
-podman run --detach --env MARIADB_DATABASE=<database_name> --env MARIADB_USER=<user_name> --env MARIADB_PASSWORD=<user_password> --env MARIADB_ROOT_HOST=<host_name> --env MARIADB_ROOT_PASSWORD=<host_password> -p 3306:3306 mariadb:latest
+# Fill in the <bracketed> values before running the command below, which creates a root user, empty database, and database-owning user
+# You may use any arbitrary alphanumeric string for each of these values
+podman run --detach --env MARIADB_DATABASE=<db_name> --env MARIADB_USER=<db_username> --env MARIADB_PASSWORD=<db_password> --env MARIADB_ROOT_PASSWORD=<root_password> --name oaa-mariadb -p 3306:3306 mariadb:latest
 ```
 
-After creating the empty database as shown in the above step, follow the below syntax to create the database connection URLs that you'll need for `AA_RO_DB_STRING` and `AA_RW_DB_STRING` in `.env` file.
+After creating the empty database as shown in the above step, create a basic `.env` file at the root of the repo using the template below (filling in the <bracketed> values with the same values you used above when creating your database, where applicable).
+```bash
+AA_PD_API_TOKEN=<your PagerDuty API token>
+AA_PD_TEAMS=<a colon-separated list of PagerDuty team IDs>
+AA_RO_DB_STRING=mariadb+mariadbconnector://<db_username>:<db_password>@127.0.0.1:3306/<db_name>
+AA_RW_DB_STRING=mariadb+mariadbconnector://<db_username>:<db_password>@127.0.0.1:3306/<db_name>
+AA_QUESTION_CLASSES=QMostFrequent:QNeverAcknowledged:QNeverAcknowledgedSelfResolved:QAcknowledgedUnresolved:QSelfResolvedImmediately:QSREResolvedImmediately:QFlappingShift
 ```
-database_username:database_password@127.0.0.1:3306/database_name
+You may now proceed with populating your incident cache database using `updater.py`. As explained below, fully-populating your database may take hours. You can instead only download the last 100 incidents into your database using the following command (which should only take 5-10 minutes).
+```bash
+python3 updater.py --limit 100 --verbose
 ```
-You may now proceed with populating your database using `updater.py`, as shown in the next section.
+
+Once your database is populated with at least 10 incidents/alerts, you can start a development web server by running the `wsgi.py` file, as shown below. Note that you may have to replace `python3` with `python39`, `python3.9`, or similar depending on your distribution.
+```bash
+python3 wsgi.py
+```
+This command should produce a URL that you can now open in your browser to view the webUI. From this point on, you may now make changes to the codebase and then kill and relaunch the `wsgi.py` process to see your changes take effect. If you reboot your computer or otherwise stop the Docker/Podman container hosting your database, you can relaunch it by running `podman start oaa-mariadb`.
+  
+You have now completed *Quick Start*. The following sections contain more detailed information about how to configure and use OAA.
 
 ## Initial Caching Database Setup
 The PagerDuty API is too slow/rate-limited to be used directly by the web application. 
