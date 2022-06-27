@@ -21,6 +21,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.event import listens_for
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func as sqlfunc
+from sqlalchemy.ext.hybrid import hybrid_property
 
 # Force use of the space-saving 3-byte UTF8 charset instead of the default 4-byte one
 SQL_CHARSET = "utf8mb3"
@@ -166,6 +167,10 @@ class Incident(PDEntityMixin, Base):
     resolved_by_id = Column(Integer, ForeignKey("pd_agents.id"))
     resolved_by = relationship("PDAgent")
     silenced = Column(Boolean(), default=False)
+
+    @hybrid_property
+    def service_name(self):
+        return sqlfunc.substring_index(Incident.service, ".", 2)
 
     def populate_via_api_log(self, session, pd_log_entries):
         """
