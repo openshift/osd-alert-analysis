@@ -294,7 +294,15 @@ class QFlappingShift(Question):
         self._description = (
             "Which alerts fire more than once per on-call shift (in the same cluster)?"
         )
-        self._column_names = ["cluster", "name", "namespace", "urgency", "flaps"]
+        self._column_names = [
+            "Name",
+            "Service",
+            "Alert",
+            "Namespace",
+            "Urgency",
+            "Flaps",
+        ]
+        # self._column_names = ["Name", "Service", "Alert", "Namespace", "Urgency", "Flaps"]
 
     def _query(self):
         # First create a subquery that counts flaps per-shift-date
@@ -305,6 +313,7 @@ class QFlappingShift(Question):
             .join(Incident)
             .group_by(
                 Alert.cluster_id,
+                Incident.service_name,
                 Alert.name,
                 Alert.namespace,
                 Alert.shift,
@@ -312,6 +321,7 @@ class QFlappingShift(Question):
             )
             .with_entities(
                 Alert.cluster_id,
+                Incident.service_name,
                 Alert.name,
                 Alert.namespace,
                 Incident.urgency,
@@ -324,7 +334,13 @@ class QFlappingShift(Question):
         flap_sum = func.sum(subq.c.flap_count).label("flap_sum")
         return (
             self._db_session.query(subq, flap_sum)
-            .group_by(subq.c.cluster_id, subq.c.name, subq.c.namespace, subq.c.urgency)
+            .group_by(
+                subq.c.cluster_id,
+                subq.c.service_name,
+                subq.c.name,
+                subq.c.namespace,
+                subq.c.urgency,
+            )
             .order_by(desc(flap_sum))
         )
 
