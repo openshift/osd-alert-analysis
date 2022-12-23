@@ -25,3 +25,4 @@ SQLAlchemy==1.4.32
 tenacity==8.0.1
 urllib3==1.26.9
 Werkzeug==2.0.3
+setuptools>=65.5.1 # not directly required, pinned by Snyk to avoid a vulnerability
