@@ -52,6 +52,9 @@ objects:
                     name: alert-analysis-database-ro
                 - secretRef:
                     name: alert-analysis-pagerduty-token
+              env:
+              - name: APP_CONFIG
+                value: "/opt/app-root/src/gunicorn.conf.py"
               ports:
                 - containerPort: ${{appport}}
               readinessProbe:
