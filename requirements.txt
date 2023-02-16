@@ -24,4 +24,4 @@ six==1.16.0
 SQLAlchemy==1.4.32
 tenacity==8.0.1
 urllib3==1.26.9
-Werkzeug==2.0.3
+Werkzeug==2.2.3
