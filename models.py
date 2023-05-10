@@ -60,7 +60,7 @@ inc_teams = Table(
 # END association tables
 
 
-class PDEntityMixin(object):
+class PDEntityMixin:
     """
     A "mixin" class that can be inherited from to provide a set of fields and class
     methods common to PagerDuty entities
@@ -69,6 +69,7 @@ class PDEntityMixin(object):
     __table_args__ = {"mariadb_charset": SQL_CHARSET, "mysql_charset": SQL_CHARSET}
     id = Column(Integer, primary_key=True)
     pd_id = Column(String(length=31), unique=True)
+    # pylint: disable=not-callable
     cached_at = Column(
         TIMESTAMP, server_default=sqlfunc.now(), onupdate=sqlfunc.current_timestamp()
     )
@@ -170,6 +171,9 @@ class Incident(PDEntityMixin, Base):
 
     @hybrid_property
     def service_name(self):
+        """
+        SQLAlchemy hybrid property that returns a human-readable version of the service name
+        """
         return sqlfunc.substring_index(Incident.service, ".", 2)
 
     def populate_via_api_log(self, session, pd_log_entries):
