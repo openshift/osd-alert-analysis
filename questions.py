@@ -84,6 +84,7 @@ class Question:
 
         :returns: an SQLAlchemy result object
         """
+        # pylint: disable=not-callable
         alert_count = func.count("*").label("occurrences")
         return (
             alert_analyzer_query.join(Incident)
@@ -306,6 +307,7 @@ class QFlappingShift(Question):
 
     def _query(self):
         # First create a subquery that counts flaps per-shift-date
+        # pylint: disable=not-callable
         flap_count = func.count("*").label("flap_count")
         subq = (
             super()

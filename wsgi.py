@@ -123,16 +123,15 @@ def update_date_range(start_date, end_date, region):
     """
     Query date range picker input handler
     """
+    # pylint: disable=raise-missing-from
     path_string = "/"
     try:
         path_string += date.fromisoformat(start_date).isoformat()
         path_string += "/" + date.fromisoformat(end_date).isoformat()
         path_string += "/" + region
     except ValueError:
-        # pylint: disable=raise-missing-from
         raise PreventUpdate
-    else:
-        return path_string
+    return path_string
 
 
 if __name__ == "__main__":
