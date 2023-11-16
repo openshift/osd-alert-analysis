@@ -1,3 +1,8 @@
+# WARNING: This project has been archived and is no longer actively maintained.
+_If you wish to continue to use or develop this code yourself, we recommend you fork this repository._
+
+![status: inactive](https://img.shields.io/badge/status-inactive-red.svg)
+
 # OSD Alert Analysis
 
 Web application and supporting CLI tools for analyzing OpenShift Dedicated PagerDuty
